@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://www.falvgu.com/public/html/lawyer.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<link rel="stylesheet" href="./source/css/lawyer.style.css">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="./source/css/bootstrap.css">
+	<!-- <link rel="stylesheet" href="../css/bootstrap-theme.css"> -->
+	<script async="" src="./source/js/analytics.js"></script><script src="./source/js/jquery-3.0.0.js"></script>
+	<link rel="stylesheet" href="./source/css/font-awesome.min.css">
+	<link rel="icon" href="./source/favicon.ico" mce_href="./source/favicon.ico" type="image/x-icon">
+ 	<link rel="shortcut icon" href="./source/favicon.ico" mce_href="./source/favicon.ico" type="image/x-icon">
+	<title>法律谷</title>
+	<!-- Google Analytics -->
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','./source/js/analytics.js','ga');
+
+            ga('create', 'UA-76141288-2', 'auto');
+            ga('send', 'pageview');
+        </script>
+    <!-- End Google Analytics -->
+    <!--[if lt IE 9]>
+        <script src="//cdn.bootcss.com/es5-shim/4.5.9/es5-shim.min.js"></script>
+        <script src="//cdn.bootcss.com/es5-shim/4.5.9/es5-sham.min.js"></script>
+	<![endif]-->
+<script type="text/javascript" src="./source/js/getAddr"></script>
+<script id="loadScript" data-main="./source/js/require.config" data-script="lawyer" src="./source/js/Require.js"></script>
+
+</head>
+<body>
+	<div class="navbar-wrapper g-head">
+      <div class="container">
+				<nav class="navbar">
+            <div class="navbar-header">
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+        				<span class="sr-only">Toggle navigation</span>
+        				<span class="icon-bar"></span>
+        				<span class="icon-bar"></span>
+        				<span class="icon-bar"></span>
+      				</button>
+              <a class="navbar-brand" href="./index.html"><img src="./source/images/logo2.png"></a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-collapse">
+              <ul class="nav navbar-nav u-nav">
+								<li><a href="./index.html">首页</a></li>
+                <li class="active"><a href="./lawyer.html">找律师</a></li>
+                <li><a href="./describe.html">查案例</a></li>
+              </ul>
+            </div>
+      </nav></div>
+		
+  </div>
+
+
+
+<div class="g-return">
+	<div class="container">
+		<a href="javascript:;" id="revert"><span></span>返回修改案情</a>
+	</div>
+</div>
+
+<div class="g-lawyer" style="">
+			<div class="banner">
+				<img class="img-responsive hidden-xs container" src="./source/images/banner-lawyer.png">
+				<img class="img-responsive visible-xs-block" style="min-width: 100%" src="./source/images/banner-lawyer-mobile.png">
+				<i class="fa fa-angle-double-down fa-4x visible-xs-block" style="color: white;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);" aria-hidden="true"></i>
+			</div>
+</div>
+
+<div class="g-body container" style="min-height: 693px;">
+	<div class="g-wrap">
+		<div class="g-lawyer" style="">
+			<div class="m-choose">
+				<div class="u-title"><h3>1.案情描述<span>(＊ 必填，建议输入30字以上)</span></h3></div>
+				<div class="u-case"><textarea rows="5" id="caseTips"></textarea></div>
+				<h6>请尽量清楚的描述案件事实，例如：</h6>
+				<div class="u-tips">
+					<p>＊合同签订之后卖方不配合办理过户手续，要求卖方支付违约金</p>
+					<p>＊路上被车撞倒了，交警认定对方全责，要求对方赔偿医疗费等费用</p>
+					<p>＊公司上班整整一年之后才签订了劳动合同,也并未缴纳社会保险公司并没有工资条、考勤等记录。现在公司辞退我，我要求双倍赔偿金</p>
+				</div>
+				<div class="u-btn">
+					<a href="javascript:;" class="btn" id="tipsSure" style="box-shadow: none">想让结果更精准？进一步完善输入 <i></i></a>
+				</div>
+			</div>
+			<div class="m-blurring-pop"></div>
+			<div class="m-blurring">
+				<img src="./source/images/blurring-logo2.png" alt="">
+				<h4>哎哟！案情有点复杂，可能是描述不够清晰，请按照提示重新输入</h4>
+				<div class="u-tips">
+					<p>＊纠纷详情：详细描述您所牵涉的纠纷</p>
+					<p>＊争议焦点：描述您和对方在解决纠纷上的分歧是什么</p>
+					<p>＊诉讼要求：描述您希望通过诉讼达到什么目的</p>
+				</div>
+			</div>
+			<div class="m-case-type"></div>
+			<div class="m-choose">
+				<div class="u-title"><h3>2. 地区选择<span>(＊ 必选)</span></h3></div>
+				<div class="u-province row">
+					<div class="col-sm-4">
+						<span>省份：</span>
+						<div class="s-province" data-prov="prov"><span class="j-prov" id="20000000">广东</span><i></i>
+							<div class="m-region prov-pop"><ul class="all-box f-clear"><li>全国</li></ul><ul class="f-clear">	<li id="2000000">北京</li>	<li id="10000000">上海</li>	<li id="3000000">天津</li>	<li id="23000000">重庆</li></ul><ul class="provList f-clear">												<li id="4000000">河北</li>								<li id="5000000">山西</li>								<li id="6000000">内蒙古</li>								<li id="7000000">辽宁</li>								<li id="8000000">吉林</li>								<li id="9000000">黑龙江</li>											<li id="11000000">江苏</li>								<li id="12000000">浙江</li>								<li id="13000000">安徽</li>								<li id="14000000">福建</li>								<li id="15000000">江西</li>								<li id="16000000">山东</li>								<li id="17000000">河南</li>								<li id="18000000">湖北</li>								<li id="19000000">湖南</li>								<li id="20000000">广东</li>								<li id="21000000">广西</li>								<li id="22000000">海南</li>											<li id="24000000">四川</li>								<li id="25000000">贵州</li>								<li id="26000000">云南</li>								<li id="27000000">西藏</li>								<li id="28000000">陕西</li>								<li id="29000000">甘肃</li>								<li id="30000000">青海</li>								<li id="31000000">宁夏</li>								<li id="32000000">新疆</li>						</ul></div>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<span>地区：</span>
+						<div class="s-province"><span class="j-city" id="20020000">深圳市</span><i></i>
+							<div class="m-region city-pop"><ul class="all-box f-clear"><li>不限</li></ul><ul class="provList f-clear">			<li id="20010000">广州</li>			<li id="20020000">深圳</li>			<li id="20030000">珠海</li>			<li id="20040000">汕头</li>			<li id="20050000">佛山</li>			<li id="20060000">韶关</li>			<li id="20070000">河源</li>			<li id="20080000">梅州</li>			<li id="20090000">惠州</li>			<li id="20100000">汕尾</li>			<li id="20110000">东莞</li>			<li id="20120000">中山</li>			<li id="20130000">江门</li>			<li id="20140000">阳江</li>			<li id="20150000">湛江</li>			<li id="20160000">茂名</li>			<li id="20170000">肇庆</li>			<li id="20180000">清远</li>			<li id="20190000">潮州</li>			<li id="20200000">揭阳</li>			<li id="20210000">云浮</li>	</ul></div>
+						</div>
+
+					</div>
+				</div>
+				<div class="u-tips">
+					<p>＊经常在某地办案的律师可能会更熟悉当地的司法环境和地方法律法规</p>
+					<p>＊选择案件发生地的律师可以节省差旅费等费用</p>
+				</div>
+			</div>
+			<!-- <div class="m-choose">
+				<div class="u-title"><h3>3/ 请输入涉案财产价值<span>( 选填 ，若无涉案财产可不填)</span></h3></div>
+				<div class="u-involved"><input type="text">元<span>请输入数字</span></div>
+				<h6>请输入您的纠纷所涉及的财产价值，通过这个数字我们能更好的帮您匹配到同档位的律师，能给您带来更高的性价比</h6>
+			</div> -->
+			<div class="m-choose-btn">
+				<a id="recommend" class="btn-default">开始推荐律师</a>
+			</div>
+		</div>
+		<div class="g-loding">
+			<div class="loadEffect">
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+			</div>
+			<p>正在分析你的案情，我们将根据你的案情推荐最适合的律师</p>
+			<!--<p class="j-help">已帮你找到<span class="j-random">79</span>个律师</p>-->
+		</div>
+		<div class="g-loding2">
+			<div class="loadEffect">
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+			</div>
+		</div>
+
+		<div class="g-lawyer-list">
+			<div class="m-condition">
+				<p><i class="icon-ok"></i>根据输入条件，我们为您找到<span class="j-random"></span>个办理过类似案件并在相关领域经验丰富的律师（按相关领域内案件数量排序）：</p>
+			</div>
+			<div class="m-list" id="lawyerList">
+			</div>
+			<div class="pagination" id="Pagination"></div>
+		</div>
+		<div class="floating-btns">
+		  <div class="scroll-top" id="scroll-top" style="display: none"><i class="fa fa-chevron-up fa-3x" aria-hidden="true"></i></div>
+	</div>
+	</div>
+</div>
+<div class="container-fluid g-foot">
+	<div class="footer g-wrap">
+		<p>法宝贝</p>
+		<p>©2017 fabaobei.com版权所有  |  <a href="">备案号</a></p>
+		<p>如有任何疑问或建议请发邮件至xxx</p><p><a href="#@" target="_blank">用户协议</a><a href="#@" target="_blank">联系我们</a></p>
+	</div>
+</div>
+</body></html>
