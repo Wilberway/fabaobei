@@ -300,7 +300,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				province:[
 					'<ul class="all-box f-clear"><li>全国</li></ul>',
 					'<ul class="f-clear">',
-					'	<li id="<%=data["2000000"][0].i%>"><%=decodeURI(data["2000000"][0].n)%></li>',
+					'	<li id="<%=data["2000000"][0].i%>"><%=data["2000000"][0].n%></li>',
 					'	<li id="<%=data["10000000"][0].i%>"><%=data["10000000"][0].n%></li>',
 					'	<li id="<%=data["3000000"][0].i%>"><%=data["3000000"][0].n%></li>',
 					'	<li id="<%=data["23000000"][0].i%>"><%=data["23000000"][0].n%></li>',
@@ -633,7 +633,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 		ajaxRegion: function(callback) {
 			var self = this;
 			$.ajax({
-				url: 'source/js/court_loc_idx.json',
+				url: 'source/js/loc.json',
 				type: 'POST',
 				dataType: 'json',
 				data: {},
@@ -783,7 +783,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 		provAjax:function(json){
 			var self = this;
 			var data = (typeof json == 'object') ? json : JSON.parse(json)
-			$(".prov-pop").html(ejs.render(self.mosaic.province,{data : data, escape: escape, decodeURI: decodeURI}))
+			$(".prov-pop").html(ejs.render(self.mosaic.province,{data : data}))
 			for(var i = 0; i < data["0"].length; i++){
 				if(data["0"][i].n == self.element.$provName){
 					$(".j-prov").attr("id", data["0"][i].i);
@@ -794,7 +794,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			var self = this;
 			var data = (typeof json == 'object') ? json : JSON.parse(json)
 			var id = $(".j-prov").attr("id");
-			$(".city-pop").html(ejs.render(self.mosaic.city,{data : data, id : id, escape: escape, decodeURI: decodeURI}))
+			$(".city-pop").html(ejs.render(self.mosaic.city,{data : data, id : id}))
 			for (var i = 0; i < data[id].length; i++) {
 				var cityName = this.element.$cityName.replace("市",'');
 				if(data[id][i].n == cityName){
