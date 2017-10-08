@@ -406,15 +406,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     line-height: 66px;
     padding: 15px; }
     .g-head .u-nav li a {
-      font-size: 14px;
+      font-size: 18px;
       color: #ccc;
       padding-bottom: 0px; }
       .g-head .u-nav li a:hover {
         color: #86a6df;
         background-color: transparent; }
     .g-head .u-nav li.active a {
-      color: #f8f8f8;
-      border-bottom: 1px solid #f8f8f8; }
+      color: #f8f8f8; }
   .g-head .u-send {
     height: 66px;
     line-height: 66px;
@@ -1379,7 +1378,7 @@ img {
 
 .g-describe {
   min-height: 940px;
-  padding-top: 22px; }
+  padding-top: 122px; }
   .g-describe .m-title {
     color: #111;
     font-weight: bold; }
@@ -1662,7 +1661,7 @@ img {
   cursor: pointer;
   z-index: 1500; }
   .floating-btns div {
-    margin-bottom: 5px;
+    margin-bottom: 135px;
     width: 46px;
     opacity: 0.8; }
     .floating-btns div img {
@@ -1784,7 +1783,7 @@ img {
 
 .g-lawyer {
   position: relative;
-  padding-bottom: 20px; }
+  padding-bottom: 22px; }
   .g-lawyer .m-choose .u-title h3 {
     font-size: 16px;
     color: #111; }
@@ -3052,3 +3051,24 @@ div.panel-heading {
   margin-bottom: 70px;
 }
 /*# sourceMappingURL=style.css.map */
+.nav > li > a:focus{
+  background-color:transparent !important;
+}
+.g-head{
+  background-color: rgba(25,25,25,0.8);
+}
+.g-foot {
+  background-color: rgba(25,25,25,0.8);
+}
+.navbar-tit{
+  float:left;
+}
+.navbar-tit span{
+  float: left;
+  height: 66px;
+  line-height: 42px;
+  padding: 15px;
+  font-size: 36px;
+  font-weight: bold;
+  color: #5068a9;
+}

@@ -50,6 +50,7 @@
               <a class="navbar-brand" href="./index.html"><img src="./case_files/logo2.png"></a>
             </div>
             <div class="navbar-collapse collapse" id="navbar-collapse">
+                 <div span class="navbar-tit"><span>法宝贝</span></div>
               <ul class="nav navbar-nav u-nav">
                 <li><a href="./index.html">首页</a></li>
                 <li><a href="./lawyer.html">找律师</a></li>
@@ -59,7 +60,6 @@
       </nav></div>
     
   </div>
-
 
 <div class="g-body">
     <div class="g-describe container">
@@ -81,13 +81,13 @@
 
                     <div class="g-sidec">
                         <div class="m-title">
-                            <p>1/模糊匹配<span class="orange">(请输入案情, *必填)</span></p>
+                            <h3>1.模糊匹配<span class="orange">(请输入案情, *必填)</span></h3>
                         </div>
                         <div class="m-textarea">
                             <textarea spellcheck="false" tabindex="1" id="case-explain" class="focus form-controll" rows="5" placeholder="这里将进行模糊匹配，比如您输入“卡车事故”，会搜索到包含“挂货车”，“牵引车”等要素的案件"></textarea>
                         </div>
                          <div class="m-title">
-                            <p>2/输入关键词<span>(选填)</span></p>
+                            <h3>2.输入关键词<span>(选填)</span></h3>
                         </div>
                         <div class="m-keyword">
                             <input type="text" id="keyword" class="focus form-control" placeholder="输入关键词，多个用空格隔开">
@@ -95,7 +95,7 @@
                         <div class="u-btn">
                             <a href="javascript:;" id="smart-search">找相似案例</a>
                         </div>
-                        <div class="m-nav hidden-xs">
+                        <!-- <div class="m-nav hidden-xs">
                             <div class="nav-mask"></div>
                             <div class="m-ul" id="caseNav">
 
@@ -128,44 +128,39 @@
                                     <li class="unlimited-text menu-select" id="menu-doc-judge">判决书</li>
                                     <li class="unlimited-text menu-select" id="menu-doc-decide">裁定书</li>
                                 </ul>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
-                </div>
-                <div class="g-main col-sm-9">
-                    <div class="g-mainc">
-                        <div class="g-result">
-                            <div class="result-mask" id=""></div>
-
-                            <div class="m-look f-clear" id="content-tag">
-                                <ul>
-                                    <li>当前筛选条件</li>
-                                    <li id="tag-condt-case"><i>×</i></li>
-                                    <li id="tag-condt-area"><i>×</i></li>
-                                    <li id="tag-condt-doc"><i>×</i></li>
-                                    <li id="tag-condt-year"><i>×</i></li>
-                                </ul>
-                                <div class="allcancel"><a href="javascript:;" class="tag-clear-btn">全部取消</a></div>
+                    <div class="g-main col-sm-9">
+                            <div class="g-mainc">
+                                <div class="g-result">
+                                    <div class="result-mask" id=""></div>
+        
+                                    <div class="m-look f-clear" id="content-tag">
+                                        <ul>
+                                            <li>当前筛选条件</li>
+                                            <li id="tag-condt-case"><i>×</i></li>
+                                            <li id="tag-condt-area"><i>×</i></li>
+                                            <li id="tag-condt-doc"><i>×</i></li>
+                                            <li id="tag-condt-year"><i>×</i></li>
+                                        </ul>
+                                        <div class="allcancel"><a href="javascript:;" class="tag-clear-btn">全部取消</a></div>
+                                    </div>
+                                    <div class="m-not-found">
+                                        <img src="./case_files/not-found.jpg">
+                                    </div>
+                                    <div class="m-tips m-excessive" id="content-load" style="display:none;">
+                                        <img class="block" id="u279_img" src="./case_files/loadingmotion.gif" alt="" width="150">
+                                        <p>正在搜索......</p>
+                                    </div>
+                                    <div class="m-result" id="result-container">
+                                    </div>
+                                     <img class="scroll-load" src="./case_files/loading.gif" alt="" id="scrollLoad" style="display: none;">
+                                </div>
                             </div>
-                            <div class="m-tips" id="content-title">
-                                <img src="./case_files/pasted.jpg" alt="" width="170" height="170">
-                                <p>请输入案情描述，</p>
-
-                                <p>智能分析并匹配相似案件及其判决结果</p>
-                            </div>
-                            <div class="m-not-found">
-                                <img src="./case_files/not-found.jpg">
-                            </div>
-                            <div class="m-tips m-excessive" id="content-load" style="display:none;">
-                                <img class="block" id="u279_img" src="./case_files/loadingmotion.gif" alt="" width="150">
-                                <p>正在搜索......</p>
-                            </div>
-                            <div class="m-result" id="result-container">
-                            </div>
-                             <img class="scroll-load" src="./case_files/loading.gif" alt="" id="scrollLoad" style="display: none;">
                         </div>
-                    </div>
                 </div>
+               
     </div>
   </div>
 </div>

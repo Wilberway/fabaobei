@@ -175,6 +175,10 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
             this.element.$scrollTop.on("click",this.scrollTop.bind(this));
 			this.element.$filterBtn.on("click", this.mobileFilterClicked.bind(this));
 			this.element.$resultMask.on("click", this.dismissSearch.bind(this));
+			var he = $(window).height() - 183;
+		    $('.g-body').css({
+		    	"min-height" : he+"px",
+		    });
 
 		},
 		showTxt:function(){

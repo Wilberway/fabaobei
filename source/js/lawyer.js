@@ -214,7 +214,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					'<div class="m-synopsis container">',
 					 '	<a href="details.html?name=<%=encodeURI(data.pt_agent[i].name)%>&location=<%=encodeURI(data.pt_agent[i].location)%>" class="f-jump lawyer-record">',
 					'		<div class="row">',
-					'			<div class="m-portrait col-xs-3 col-sm-2">',
+					//'			<div class="m-portrait col-xs-3 col-sm-2">',
 					//头像
 					// '					<% if(!data.pt_agent[i].photoUrl){ %>',
 					// '						<img src="./source/images/index/default-mid.png" class="img-responsive img-rounded center-block" style="width:150px" alt="" />',
@@ -227,7 +227,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					// '				<% }else{ %>',
 					// '					<div class="validate center-block" width="150px" style="max-width:100%"><i class="validate-ok"></i>已认证</div>',
 					// '				<% } %>',
-					'			</div>',
+					//'			</div>',
 					'			<div class="m-character col-xs-12 col-sm-10">',
 					'				<h3><%=data.pt_agent[i].name%><span><%-data.pt_agent[i].lawyerInc%></span></h3>',
 					'				<div class="u-line hidden-xs"></div>',
@@ -704,7 +704,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				"page_count": 10,
 				"reason": {}
 			}
-			if(this.selector.reason.reason_2){
+			if(this.selector.reason && this.selector.reason.reason_2){
 				ajaxData.reason = this.selector.reason;
 			}else{
 				ajaxData.reason['reason_2'] = second_reason;
