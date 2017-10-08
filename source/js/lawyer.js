@@ -210,7 +210,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					'<% } %>',
 				].join(""),
 				lasyerList2 : [
-					'<% for (var i = 0; i < data.length; i++) { %>',
+					'<% for (var i = 0; i < data.length-1; i++) { %>',
 					'<div class="m-synopsis container">',
 					 '	<a href="details.html?name=<%=encodeURI(data[i].name)%>&location=<%=encodeURI(data[i].location)%>" class="f-jump lawyer-record">',
 					'		<div class="row">',
@@ -729,7 +729,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					// 	pageNum : pageNum,
 					// }
 			})
-			.done(self.successAjax.bind(this))
+			.done(self.successAjax.bind(this,typeName))
 			.fail(function(jqXHR, textStatus) {
 				console.log(jqXHR);
 
@@ -739,12 +739,14 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				console.log("complete");
 			});
 		},
-		successAjax: function(json){
+		successAjax: function(typeName,json){
+			console.log('json',json);
+			console.log('typeName',typeName);
 			var self = this;
 			if(!!json){
 				var data = (typeof json == 'object') ? json : JSON.parse(json)
 				var dataList = $("#lawyerList");
-				var typeName = $("#caseType").find("li").eq(0).text();
+				typeName = $("#caseType").find("li").eq(0).text()||typeName;
 				if(data.code != 0){
 					alert("搜索没找到数据,请返回修改！")
 					$(".g-loding").hide();
@@ -759,6 +761,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					$(".scroll-top").show();
 					
 					dataList.fadeIn(1000, function() {
+						console.log(data);
 						dataList.html(ejs.render(self.mosaic.lasyerList2,{data:data.data,typeName:typeName}))
 						$("a.lawyer-record").on("click", self.replaceBrowserHistory.bind(self));
 					});

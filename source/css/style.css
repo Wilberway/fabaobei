@@ -2055,9 +2055,11 @@ img {
   .g-lawyer-list .m-synopsis {
     margin-bottom: 28px;
     border: 1px solid #E6E6E6; }
+    .g-lawyer-list .m-synopsis .row:hover{
+      box-shadow: 0px 0px 10px rgba(11,55,76,0.35);
+    }
     .g-lawyer-list .m-synopsis .f-jump:hover {
-      display: block;
-      background: #f9f9f9; }
+      display: block; }
     .g-lawyer-list .m-synopsis .u-line {
       height: 1px;
       background: #e6e6e6; }
@@ -2206,7 +2208,7 @@ img {
         font-family: "iconfont" !important;
         font-size: 14px;
         font-style: normal;
-        color: #64CC8E;
+        color: #5068a9;
         margin-right: 8px;
         -webkit-font-smoothing: antialiased;
         -webkit-text-stroke-width: 0.2px;
@@ -2233,7 +2235,7 @@ img {
       line-height: 24px; }
       .g-details .m-synopsis .m-skilful dd a {
         font-size: 14px;
-        color: #64cc8e; }
+        color: #5068a9; }
       .g-details .m-synopsis .m-skilful dd span {
         margin-right: 24px; }
   .g-details .g-title {

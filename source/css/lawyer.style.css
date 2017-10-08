@@ -2051,12 +2051,12 @@ img {
       margin-bottom: 10px; }
       .g-lawyer-list .m-condition p .green {
         margin: 0; }
-  .g-lawyer-list .m-synopsis {
-    margin-bottom: 28px;
-    border: 1px solid #E6E6E6; }
-    .g-lawyer-list .m-synopsis .f-jump:hover {
-      display: block;
-      background: #f9f9f9; }
+        .g-lawyer-list .m-synopsis {
+          margin-bottom: 28px;
+          border: 1px solid #E6E6E6; }
+          .g-lawyer-list .m-synopsis .row:hover{
+            box-shadow: 0px 0px 10px rgba(11,55,76,0.35);
+          }
     .g-lawyer-list .m-synopsis .u-line {
       height: 1px;
       background: #e6e6e6; }

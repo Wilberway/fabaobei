@@ -668,14 +668,13 @@ self.ajaxData(3,self.ajaxEchart_3);
 			var self = this;
 			console.log(localStorage)
 			$.ajax({
-				url: 'http://47.92.38.167:8888/static_query/lawyer_detail',
+				url: 'http://47.92.38.167:8889/static_query/lawyer_list',
 				type: 'POST',
 				dataType: 'json',
 				data: {
 					lawyer_name : App.prototype.name,
 					lawyer_location : App.prototype.location,
-					caseName : '',
-					sub_type: "basic_info"
+					reason : ''
 				},
 
 			})
