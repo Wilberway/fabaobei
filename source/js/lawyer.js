@@ -11,7 +11,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			involvedMoney: "",//涉案金额
 			pageNum : 0,//页数
 			totalSize: 0,//总页数
-			reason: {},
+			second_reason: "",
 			reasonClass: 1
 		};
 	} else {
@@ -90,11 +90,11 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					'	<h3>根据您输入的案情，您的案件可能是以下类型，请选择：<span>(*必选)</span></h3>',
 					'	<ul id="caseType">',
 					'		<% var testing = false,num = [] %>',
-					'		<% for (var i = 0; i < data.reason_list.length; i++) {%>',
+					'		<% for (var i = 0; i < data.length; i++) {%>',
 					'			<% if( i == 0 ){ %>',
-					'				<li class="active"><span><i></i></span><%=data.reason_list[i][0]%></li>',
+					'				<li class="active"><span><i></i></span><%=data[i]["reason"]%></li>',
 					'			<% }else{ %>',
-					'				<li><span><i></i></span><%=data.reason_list[i][0]%></li>',
+					'				<li><span><i></i></span><%=data[i]["reason"]%></li>',
 					'			<% }; %>',
 					'		<% }; %>',
 					'	</ul>',
@@ -210,18 +210,18 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					'<% } %>',
 				].join(""),
 				lasyerList2 : [
-					'<% for (var i = 0; i < data.pt_agent.length; i++) { %>',
+					'<% for (var i = 0; i < data.length; i++) { %>',
 					'<div class="m-synopsis container">',
-					 '	<a href="details.html?name=<%=encodeURI(data.pt_agent[i].name)%>&location=<%=encodeURI(data.pt_agent[i].location)%>" class="f-jump lawyer-record">',
+					 '	<a href="details.html?name=<%=encodeURI(data[i].name)%>&location=<%=encodeURI(data[i].location)%>" class="f-jump lawyer-record">',
 					'		<div class="row">',
 					//'			<div class="m-portrait col-xs-3 col-sm-2">',
 					//头像
-					// '					<% if(!data.pt_agent[i].photoUrl){ %>',
+					// '					<% if(!data[i].photoUrl){ %>',
 					// '						<img src="./source/images/index/default-mid.png" class="img-responsive img-rounded center-block" style="width:150px" alt="" />',
 					// '					<% }else{ %>',
-					// '						<img src="<%=data.pt_agent[i].photoUrl%>" class="img-responsive img-rounded center-block"  alt="" width="150px" />',
+					// '						<img src="<%=data[i].photoUrl%>" class="img-responsive img-rounded center-block"  alt="" width="150px" />',
 					// '					<% } %>',
-					// '<% if (data.pt_agent[i].certification == 0) { %>',
+					// '<% if (data[i].certification == 0) { %>',
 
 					// '					<div class="validate center-block notValidate" style="border-radius: 6px; width:150px; max-width:100%">未认证</div>',
 					// '				<% }else{ %>',
@@ -229,7 +229,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					// '				<% } %>',
 					//'			</div>',
 					'			<div class="m-character col-xs-12 col-sm-10">',
-					'				<h3><%=data.pt_agent[i].name%><span><%-data.pt_agent[i].lawyerInc%></span></h3>',
+					'				<h3><%=data[i].name%><span><%-data[i].lawyerInc%></span></h3>',
 					'				<div class="u-line hidden-xs"></div>',
 					'     </div>',
 					'     <div class="m-character col-xs-12 col-sm-10">',
@@ -243,51 +243,51 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					'						<%} %>',
 					'					<dt>相关领域内办案数量：</dt>',
 					'					<dd class="blod">',
-					'					<% if(data.pt_agent[i].num == 0){ %>',
+					'					<% if(data[i].num == 0){ %>',
 					'						<span>暂无</span>',
 					'					<%}else{ %>',
-					'						<span><%=data.pt_agent[i].num %></span>',
+					'						<span><%=data[i].num %></span>',
 					'					<%} %>',
 					'					</dd>',
 					'					<dt>律师事务所：</dt>',
-					'						<% if(data.pt_agent[i].location == ""){ %>',
+					'						<% if(data[i].location == ""){ %>',
 					'							<dd>暂无</dd>',
 					'						<%}else{ %>',
-					'							<dd><%=data.pt_agent[i].location%></dd>',
+					'							<dd><%=data[i].location%></dd>',
 					'						<%} %>',
 					// '					<dt>执业年限：</dt>',
-					// '						<% if(data.pt_agent[i].workAge == "" || data.pt_agent[i].workAge == null){ %>',
+					// '						<% if(data[i].workAge == "" || data[i].workAge == null){ %>',
 					// '							<dd>暂无</dd>',
 					// '						<%}else{ %>',
-					// '							<dd><%=data.pt_agent[i].mainWorkLoc%></dd>',
+					// '							<dd><%=data[i].mainWorkLoc%></dd>',
 					// '						<%} %>',
 					'				</dl>',
 					'			</div>',
 					'		</div>',
 
 					'	</a>',
-					// '	<% if(data.pt_agent[i].similarCase != ""){ %>',
+					// '	<% if(data[i].similarCase != ""){ %>',
 					// '	<div class=""><div class="u-line col-xs-12 col-sm-10 col-sm-offset-2"></div></div>',
 					// '	<div class="m-case row">',
 					// '		<div class="col-xs-12 col-sm-10 col-sm-offset-2">',
 					// '			<dt>类似案件</dt>',
-					// '			<dd><a class="j-caseDetails" href="case-detail.html?id=<%=data.pt_agent[i].similarCase.id%>" target="_blank"><%=data.dataList[i].similarCase.caseName%></a><span><%=data.dataList[i].similarCase.judgementDate%></span></dd>',
+					// '			<dd><a class="j-caseDetails" href="case-detail.html?id=<%=data[i].similarCase.id%>" target="_blank"><%=data.dataList[i].similarCase.caseName%></a><span><%=data.dataList[i].similarCase.judgementDate%></span></dd>',
 					// '			<dd class="dispute">争议焦点：',
-					// '			<%if(data.pt_agent[i].similarCase.caseControversy.length == 0){%>',
+					// '			<%if(data[i].similarCase.caseControversy.length == 0){%>',
 					// '				暂无',
 					// '			<%}else{%>',
-					// '				<%=data.pt_agent[i].similarCase.caseControversy%>',
+					// '				<%=data[i].similarCase.caseControversy%>',
 					// '			<%}%>',
 					// '			</dd>',
 					// '		</div>',
 					// '		<div class="u-similarity col-sm-offset-10">',
-					// '			<% if( data.pt_agent[i].similarCase.score <= 0.8){ %>',
+					// '			<% if( data[i].similarCase.score <= 0.8){ %>',
 					// '				<p style="margin:0">相似度<span>极高</span></p>',
 					// '				<div class="grade"><span></span><span></span><span></span><span></span></div>',
-					// '			<% }else if(data.pt_agent[i].similarCase.score < 1.2 && data.pt_agent[i].similarCase.score > 0.8){ %>',
+					// '			<% }else if(data[i].similarCase.score < 1.2 && data[i].similarCase.score > 0.8){ %>',
 					// '				<p>相似度<span class="green">高</span></p>',
 					// '				<div class="grade green"><span></span><span></span><span></span><span class="u-gray"></span></div>',
-					// '			<% }else if(data.pt_agent[i].similarCase.score >= 1.2){ %>',
+					// '			<% }else if(data[i].similarCase.score >= 1.2){ %>',
 					// '				<p>相似度<span class="org">低</span></p>',
 					// '				<div class="grade org"><span></span><span></span><span class="u-gray"></span><span class="u-gray"></span></div>',
 					// '			<% } %>',
@@ -652,7 +652,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					text: self.selector.caseDes,
 			};
 			$.ajax({
-					url: 'http://47.92.38.167:8888/feature_query/case_type',
+					url: 'http://47.92.38.167:8889/feature_query/case_type',
 				type: 'POST',
 				dataType: 'json',
 				data: JSON.stringify(data)
@@ -669,22 +669,17 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 						$(".m-case-type").hide();
 					}else{
 						self.selector.caseTypeBox = [];
-						self.element.$caseTypeBox.html(ejs.render(self.mosaic.caseType,{data : data}));
+						self.element.$caseTypeBox.html(ejs.render(self.mosaic.caseType,{data : data[0]}));
 						for( var i = 0; i < data.length; i++){
 							self.selector.caseTypeBox.push(data[i][2]);
-
-							if(data[i][0] == "刑事"){
-								$(".dispute-list").eq(i).attr("id","criminal");
-								$("#criminal").find('.order').hide();
-							}
 						}
-						self.selector.caseTypeName = data['reason_list'][0][0];
-						self.selector.caseType = self.selector.caseTypeBox[0];
+						self.selector.caseTypeName = data[0]['reason'];
+						self.selector.caseType = data[0]['sub_reason_class'];
 						if(self.element.$caseTypeBox.hasClass('show')){
 							return;
 						}else{
 							//self.ajax(0,data[0][0],data[0][2]);
-							self.ajax(0,data['reason_list'][0][0],data['second_reason'],data['sub_reason_class']);
+							self.ajax(0,data[0]['reason'],data[0]['second_reason'],data[0]['sub_reason_class']);
 						}
 					}
 				}
@@ -704,17 +699,20 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				"page_count": 10,
 				"reason": {}
 			}
-			if(this.selector.reason && this.selector.reason.reason_2){
-				ajaxData.reason = this.selector.reason;
+			if(this.selector.second_reason){
+				ajaxData.reason = {
+					'reason_2' : this.selector.second_reason
+				};
 			}else{
 				ajaxData.reason['reason_2'] = second_reason;
 				ajaxData.reason["reason_" + reason_class] = typeName;
-				this.selector.reason = ajaxData.reason;
 				this.selector.reasonClass = reason_class;
 			}
+			this.selector['second_reason'] = ajaxData.reason['reason_2'];
+			this.selector['reasonClass'] = reason_class;
 			ajaxData.reason["reason_" + reason_class] = typeName;
 			$.ajax({
-					url: 'http://47.92.38.167:8888/static_query/lawyer_list',
+					url: 'http://47.92.38.167:8889/static_query/lawyer_list',
 				type: 'POST',
 				dataType: 'json',
 				data: JSON.stringify(ajaxData)
