@@ -31,9 +31,9 @@ define(["require", "unslider","echarts","china","common","ejs","pagination","tab
 				$mTab: $(".m-tab"),
 				$uTab: $(".u-tab"),
 				$clickToPayBtn: $("#click-to-pay-btn"),
-				$pieEcharts : echarts.init(document.getElementById('typePie')),
-				$mapEcharts : echarts.init(document.getElementById('map')),
-			  $barEcharts : echarts.init(document.getElementById("bar")),
+				//$pieEcharts : echarts.init(document.getElementById('typePie')),
+				//$mapEcharts : echarts.init(document.getElementById('map')),
+			 // $barEcharts : echarts.init(document.getElementById("bar")),
 			};
 
 
@@ -126,13 +126,13 @@ define(["require", "unslider","echarts","china","common","ejs","pagination","tab
 				].join(""),
 				lawyerDetails: [
 					'<div class="m-portrait  col-xs-4 col-md-3 col-lg-2">',
-					'	<% if (data.photoUrl == "") { %>',
+					'	<% if (data.pic_url == "") { %>',
 					'		<img class="img-responsive img-thumnail" style="min-width:100%" src="../images/default-big.jpg">',
 					'	<% }else{ %>',
-					'		<img class="img-responsive img-thumnail" style="min-width:100%" src="<%=data.photoUrl%>">',
+					'		<img class="img-responsive img-thumnail" style="min-width:100%" src="<%=data.pic_url%>">',
 					'	<% } %>',
 
-					'		<% if(data.certification == 0){ %>',
+					'		<% if(data.license_no == 0){ %>',
 					'			<div class="validate notValidate">未认证</div>',
 					'		<% }else{ %>',
 					'			<div class="validate"><i class="validate-ok"></i>已认证</div>',
@@ -141,54 +141,49 @@ define(["require", "unslider","echarts","china","common","ejs","pagination","tab
 					'<div class="m-synopsis col-xs-8 col-md-9 col-lg-10" style="position: relative;min-height:50px">',
 					' <div class="blur-cover"><button class="btn btn-primary click-to-pay-btn" id="click-to-pay-btn">点击付费查看更多详情</button></div>',
 					'	<div class="f-clear ">',
-					'		<div class="name col-xs-12 col-sm-4 col-md-3"><%=data.lawyerName%></div>',
-					'		<div class="office col-xs-12 col-sm-8"><%=data.lawyerInc%></div>',
+					'		<div class="name col-xs-12 col-sm-4 col-md-3"><%=name%></div>',
+					'		<div class="office col-xs-12 col-sm-8"><%=location%></div>',
 					'	</div>',
 					'</div>',
 					'<div class="m-synopsis col-xs-12 col-sm-8 col-md-9 col-lg-10">',
 					'	<div class="list f-clear" style="position: relative;min-height:50px">',
 					' 	<div class="blur-cover"></div>',
 					'		<div class="">',
-					'		<div class="col-sm-6 col-xs-12 <%= data.certificationNo == 0 || data.certificationNo == "" ? "hidden-xs" : "" %>">',
+					'		<div class="col-sm-6 col-xs-12 <%= data.license_no == 0 || data.license_no == "" ? "hidden-xs" : "" %>">',
 
 					'			<dt><span class="icon-list">&#xe600;</span>执业证号</dt>',
-					'			<% if(data.certificationNo == 0 || data.certificationNo == ""){ %>',
+					'			<% if(data.license_no == 0 || data.license_no == ""){ %>',
 					'				<dd>该律师尚未认证</dd>',
 					'			<% }else{ %>',
-					'				<dd><%=data.certificationNo%></dd>',
+					'				<dd><%=data.license_no%></dd>',
 					'			<% } %>',
 					'   </div>',
-					'		<div class="col-sm-6 col-xs-12 <%=data.contact == "" ? "hidden-xs" : "" %>">',
-					'			<dt><span class="icon-list">&#xe605;</span>联系方式</dt>',
-					'			<% if(data.contact == ""){ %>',
-					'				<dd>暂无</dd>',
-					'			<% }else{ %>',
-					'				<dd><button class="btn btn-primary" id="reveal-phone-btn">点击付费查看联系方式</button></dd>',
-					'				<dd id="phone-info" style="display: none"><%=data.contact%></dd>',
-					'			<% } %>',
+					'	<div class="col-sm-6 col-xs-12 <%=data.gender == "" ? "hidden-xs" : "" %>">',
+					'		<dt><span class="icon-list">&#xe605;</span>性别</dt>',
+					'			<dd><%=data.gender%></dd>',
 					'   </div>',
 					'		<div class="col-sm-6 col-xs-12 <%=data.legalFee == "" ? "hidden-xs" : ""%>">',
-					'			<dt><span class="icon-list">&#xe603;</span>律师费</dt>',
-					'			<% if(data.legalFee == ""){ %>',
+					'			<dt><span class="icon-list">&#xe603;</span>学历</dt>',
+					'			<% if(data.degree == ""){ %>',
 					'				<dd>暂无</dd>',
 					'			<% }else{ %>',
-					'				<dd><%=data.legalFee%></dd>',
+					'				<dd><%=data.degree%></dd>',
 					'			<% } %>',
 					'   </div>',
-					'		<div class="col-sm-6 col-xs-12 <%= data.workAge == "" ? "hidden-xs" : "" %>">',
+					'		<div class="col-sm-6 col-xs-12 <%= data.license_year == "" ? "hidden-xs" : "" %>">',
 					'			<dt><span class="icon-list">&#xe601;</span>执业年限</dt>',
-					'			<% if(data.workAge == ""){ %>',
+					'			<% if(data.license_year == null){ %>',
 					'				<dd>暂无</dd>',
 					'			<% }else{ %>',
-					'				<dd><span class="f-num"><%=data.workAge%></span>年</dd>',
+					'				<dd><span class="f-num"><%=data.license_year%></span>年</dd>',
 					'			<% } %>',
 					'   </div>',
-					'		<div class="col-sm-6 col-xs-12 <%= data.caseNum == "" ? "hidden-xs" : ""%>"">',
+					'		<div class="col-sm-6 col-xs-12 <%= data.judge_count == "" ? "hidden-xs" : ""%>"">',
 					'			<dt><span class="icon-list">&#xe606;</span>收录案件数量</dt>',
-					'			<% if(data.caseNum == ""){ %>',
+					'			<% if(data.judge_count == ""){ %>',
 					'				<dd>暂无</dd>',
 					'			<% }else{ %>',
-					'				<dd><span class="f-num"><%=data.caseNum%></span>件</dd>',
+					'				<dd><span class="f-num"><%=data.judge_count%></span>件</dd>',
 					'			<% } %>',
 					'   </div></div>',
 					'	</div>',
@@ -210,7 +205,11 @@ define(["require", "unslider","echarts","china","common","ejs","pagination","tab
 					'			<% if(data.similarCase.caseName != "" && data.similarCase.id != ""){%>',
 					'       <div style="clear:both">',
 					'				<dt>类似案例</dt>',
+					'			<% if(!data.similarCase.caseName){ %>',
+					'				<dd>暂无</dd>',
+					'			<% }else{ %>',
 					'       <dd><a class="caseName" href="case-detail.html?id=<%=data.similarCase.id%>" target="_blank"><%=data.similarCase.caseName%></a></dd>',
+					'			<% } %>',
 					'       </div>',
 					'			<% } %>',
 					'		</dl>',
@@ -312,7 +311,11 @@ self.ajaxData(3,self.ajaxEchart_3);
 			this.element.$Control.on("click",this.Control.bind(this));
 			this.element.$caseList.on("click",this.slideSee.bind(this));
 			this.element.$caseNav.on("click","li",this.tabType.bind(this));
-			this.element.$pieEcharts.on("click",this.typeList.bind(this));
+			//this.element.$pieEcharts.on("click",this.typeList.bind(this));
+			var he = $(window).height() - 195;
+		    $('.g-body').css({
+		    	"min-height" : he+"px",
+		    });
 		},
 		revealPhoneInfo: function() {
 			$("#reveal-phone-btn").parent().hide();
@@ -666,25 +669,30 @@ self.ajaxData(3,self.ajaxEchart_3);
 
 	    ajax: function() {
 			var self = this;
-			console.log(localStorage)
+			console.log(localStorage);
+			var reqData = {
+				lawyer_name : App.prototype.name,
+				lawyer_location : App.prototype.location,
+			};
 			$.ajax({
-				url: 'http://47.92.38.167:8889/static_query/lawyer_list',
+				url: 'http://47.92.38.167:8889/static_query/lawyer_info',
 				type: 'POST',
 				dataType: 'json',
-				data: {
-					lawyer_name : App.prototype.name,
-					lawyer_location : App.prototype.location,
-					reason : ''
-				},
+				data: JSON.stringify(reqData)
 
 			})
 			.done(function(json) {
-				console.log(resData,json);
-				var data = (typeof json == 'object') ? json : JSON.parse(json)
+				var data = (typeof json == 'object') ? json.data : JSON.parse(json).data;
+				console.log('data',data);
+				data.goodAtFieldList = data.goodAtFieldList || [];
+				data.similarCase = data.similarCase || {};
+				data.contact = data.contact || "暂无";
 				self.element.$Details.append(ejs.render(self.mosaic.lawyerDetails,{data:data}));
 				$("#reveal-phone-btn").on("click", self.revealPhoneInfo.bind(self));
 
-				self.element.$mTab.html(ejs.render(self.mosaic.tab,{data:data}));
+				$(".m-synopsis").find(".name").text(App.prototype.name);
+				$(".m-synopsis").find(".office").text(App.prototype.location);
+				//self.element.$mTab.html(ejs.render(self.mosaic.tab,{data:data.data,name:App.prototype.name,location:App.prototype.location}));
 					$('#report-tab').tabCollapse({
 						tabsClass: 'hidden-xs',
 						accordionClass: 'visible-xs'
