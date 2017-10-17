@@ -3122,6 +3122,9 @@ div.panel-heading {
   color: #fff;
 }
 @media (max-width: 767px){
+  .g-index.g-foot{
+    margin-top: 0;
+  }
   .hidden-xs {
     display: block !important;
   }

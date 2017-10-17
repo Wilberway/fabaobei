@@ -210,7 +210,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					'<% } %>',
 				].join(""),
 				lasyerList2 : [
-					'<% for (var i = 0; i < data.length-1; i++) { %>',
+					'<% for (var i = 0; i < data.length; i++) { %>',
 					'<div class="m-synopsis container">',
 					 '	<a href="details.html?name=<%=encodeURI(data[i].name)%>&location=<%=encodeURI(data[i].location)%>" class="f-jump lawyer-record">',
 					'		<div class="row">',
@@ -603,6 +603,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 		},
 		initPagination : function(totalSize) {
 			var self = this;
+			console.log('totalSize',totalSize);
 			$("#Pagination").pagination(totalSize, {
 				num_edge_entries: 1, //边缘页数
 				num_display_entries: 4, //主体页数
@@ -614,6 +615,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			});
 		},
 		pageselectCallback: function(index,jq){
+			console.log('index',index);
 			var self = this;
 			var num = index - 1;
 			if(self.testing.callback == true){
@@ -675,6 +677,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 						}
 						self.selector.caseTypeName = data[0]['reason'];
 						self.selector.caseType = data[0]['sub_reason_class'];
+						self.selector.second_reason = data[0]['second_reason'];
 						if(self.element.$caseTypeBox.hasClass('show')){
 							return;
 						}else{
@@ -694,6 +697,11 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 		},
 		ajax: function(pageNum,typeName,second_reason,reason_class) {
 			var self = this;
+			console.log(pageNum,typeName,second_reason,reason_class);
+			typeName = typeName || self.selector.caseTypeName;
+			second_reason = second_reason || self.selector.second_reason;
+			reason_class = reason_class || self.selector.caseType;
+			
 			var ajaxData = {
 				"page_num": pageNum+1,
 				"page_count": 10,
@@ -706,10 +714,10 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			}else{
 				ajaxData.reason['reason_2'] = second_reason;
 				ajaxData.reason["reason_" + reason_class] = typeName;
-				this.selector.reasonClass = reason_class;
+				this.selector.caseType = reason_class;
 			}
 			this.selector['second_reason'] = ajaxData.reason['reason_2'];
-			this.selector['reasonClass'] = reason_class;
+			this.selector['caseType'] = reason_class;
 			ajaxData.reason["reason_" + reason_class] = typeName;
 			$.ajax({
 					url: 'http://47.92.38.167:8889/static_query/lawyer_list',
@@ -767,7 +775,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					});
 					console.log('self.testing.callback',self.testing.callback);
 					if(self.testing.callback == false){
-						self.initPagination(json.data.max_page_num);
+						self.initPagination(data.max_page_num);
 						self.testing.callback = true;
 					}
 					$(".j-random").html($(".m-synopsis").length);
