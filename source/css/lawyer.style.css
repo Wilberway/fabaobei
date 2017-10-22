@@ -1905,6 +1905,7 @@ img {
   .g-lawyer .m-choose-btn {
     text-align: center; }
     .g-lawyer .m-choose-btn a {
+      cursor: pointer;
       width: 150px;
       height: 40px;
       line-height: 40px;

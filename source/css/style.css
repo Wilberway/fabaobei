@@ -3121,6 +3121,28 @@ div.panel-heading {
   background-color: #5068a9;
   color: #fff;
 }
+.g-details .m-details{
+  height: 350px;
+}
+.g-details .visible-chart{
+  padding: 40px 0;
+  position: relative;
+  min-height: 450px;
+}
+.g-details .circle-chart{
+  float: left;
+  display: inline-block;
+  width: 50%;
+  height: 250px;
+}
+.g-details .chartitle{
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+#circleChart1,#circleChart2{
+  height: 350px;
+}
 @media (max-width: 767px){
   .g-index.g-foot{
     margin-top: 0;

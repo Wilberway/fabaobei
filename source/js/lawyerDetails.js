@@ -1,4 +1,4 @@
-define(["require", "unslider","echarts","china","common","ejs","pagination","tabCollapse"],function(require, unslider,echarts,china){
+define(["require", "unslider","echarts","china","echartsData","common","ejs","pagination","tabCollapse"],function(require, unslider,echarts,china,echartsData){
 	var App = function(){
 		this.defaultData = {
 			certification:"", //是否认证
@@ -127,7 +127,7 @@ define(["require", "unslider","echarts","china","common","ejs","pagination","tab
 				lawyerDetails: [
 					'<div class="m-portrait  col-xs-4 col-md-3 col-lg-2">',
 					'	<% if (data.pic_url == "") { %>',
-					'		<img class="img-responsive img-thumnail" style="min-width:100%" src="../images/default-big.jpg">',
+					'		<img class="img-responsive img-thumnail" style="min-width:100%" src="./source/images/default-big.jpg">',
 					'	<% }else{ %>',
 					'		<img class="img-responsive img-thumnail" style="min-width:100%" src="<%=data.pic_url%>">',
 					'	<% } %>',
@@ -293,10 +293,10 @@ define(["require", "unslider","echarts","china","common","ejs","pagination","tab
 			$(".g-loding").fadeIn(1000);
 
 
-self.ajaxData(0,self.ajaxEchart_0);
-self.ajaxData(1,self.ajaxEchart_1);
-self.ajaxData(2,self.ajaxEchart_2);
-self.ajaxData(3,self.ajaxEchart_3);
+			// self.ajaxData(0,self.ajaxEchart_0);
+			// self.ajaxData(1,self.ajaxEchart_1);
+			// self.ajaxData(2,self.ajaxEchart_2);
+			// self.ajaxData(3,self.ajaxEchart_3);
 
 		},
 
@@ -315,12 +315,33 @@ self.ajaxData(3,self.ajaxEchart_3);
 			var he = $(window).height() - 195;
 		    $('.g-body').css({
 		    	"min-height" : he+"px",
-		    });
+			});
+			this.filterData(chartsData);
 		},
 		revealPhoneInfo: function() {
 			$("#reveal-phone-btn").parent().hide();
 			$("#phone-info").show();
 			this.onPurchaseBtnClicked();
+		},
+		filterData: function (chartsData){//处理数据显示在图表上
+			// 基于准备好的dom，初始化echarts实例
+			var myChart1 = echarts.init(document.getElementById('circleChart1'));
+			var myChart2 = echarts.init(document.getElementById('circleChart2'));
+			console.log('chartsData',chartsData);
+			// 指定图表的配置项和数据
+			var option1 = chartsData.option1;
+			var option2 = chartsData.option2;
+		
+			// 使用刚指定的配置项和数据显示图表。
+			//if(params == 1){
+		
+				myChart1.setOption(option1);
+			//}else if(params == 2){//饼图
+				//$('#echart1').hide();
+				//option2.series[0].data = data;
+		
+				myChart2.setOption(option2);
+			//}
 		},
 		tabReport: function(e){
 			var self = this;
