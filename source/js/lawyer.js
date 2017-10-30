@@ -45,7 +45,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			} else {
 				window.ADDR = window.ADDR || {"ip":"","provId":"","provName":"全国","cityId":"","cityName":"不限"};
 				prov = window.ADDR.provName;
-				city = window.ADDR.cityName;
+				city = window.ADDR.region;
 			}
 			this.element = {
 				$caseTips: $("#caseTips"),//案例描述
@@ -71,14 +71,14 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				type: false,
 			};
 
-			if (history.state != null)
-			{
-				//this.showLastResult();
-				//$('#lawyerList').children().remove();
-				$('#Pagination').remove();
-			}else {
+			// if (history.state != null)
+			// {
+			// 	this.showLastResult();
+			// 	$('#lawyerList').children().remove();
+			// 	$('#Pagination').remove();
+			// }else {
 				$(".g-lawyer").show();
-			}
+			// }
 			this.mosaic = {
 				img:[
 					'<% if(data){ %>',
@@ -210,7 +210,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					'<% } %>',
 				].join(""),
 				lasyerList2 : [
-					'<% for (var i = 0; i < data.length-1; i++) { %>',
+					'<% for (var i = 0; i < data.length; i++) { %>',
 					'<div class="m-synopsis container">',
 					 '	<a href="details.html?name=<%=encodeURI(data[i].name)%>&location=<%=encodeURI(data[i].location)%>" class="f-jump lawyer-record">',
 					'		<div class="row">',
@@ -381,6 +381,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			 }
 		},
 		showLastResult: function() {
+			console.log('1111111111')
 			$(".g-lawyer-list").html(history.state.lawyerList);
 			$(".g-lawyer-list").show();
 
@@ -495,31 +496,30 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			var caseTipsVal = this.element.$caseTips.val();
 			this.selector.caseDes = "";
 			var order = $(".order input").val();
-			console.log('$el.hasClass(btn-success)',$el.hasClass('btn-success'))
-			//if($el.hasClass('btn-success')){
+			if($el.hasClass('btn-success')){
 				if( order!= ""){
 					this.selector.disputeArr.push(order);
 				}
 				//this.selector.involvedMoney = $(".u-involved input").val().replace(/(\,+?)/g,"");
 				$(".g-lawyer").hide();
 				$(".g-return").show();
-				//if(this.element.$caseTypeBox.hasClass('show')){
+				if(this.element.$caseTypeBox.hasClass('show')){
 
-					// this.selector.disputeArr.unshift(caseTipsVal)
-					// self.selector.caseDes= this.selector.disputeArr.join(",");
-					// $(".g-loding").fadeIn(1000,function(){
-					// 	self.ajax(0,self.selector.caseTypeName,self.selector.caseType);
-					// 	//self.initPagination();
-					// });
-				//}else{
+					this.selector.disputeArr.unshift(caseTipsVal)
+					self.selector.caseDes= this.selector.disputeArr.join(",");
+					$(".g-loding").fadeIn(1000,function(){
+						self.ajax(0,self.selector.caseTypeName,self.selector.caseType);
+						//self.initPagination();
+					});
+				}else{
 
 					this.selector.caseDes = caseTipsVal;
 					$(".g-loding").fadeIn(1000,function(){
 						self.ajaxType();
 					});
-				//}
+				}
 
-			//}
+			}
 		},
 		modifyCase: function(){
 			$(".g-lawyer").show();
@@ -604,6 +604,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 		},
 		initPagination : function(totalSize) {
 			var self = this;
+			console.log('totalSize',totalSize);
 			$("#Pagination").pagination(totalSize, {
 				num_edge_entries: 1, //边缘页数
 				num_display_entries: 4, //主体页数
@@ -615,6 +616,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			});
 		},
 		pageselectCallback: function(index,jq){
+			console.log('index',index);
 			var self = this;
 			var num = index - 1;
 			if(self.testing.callback == true){
@@ -650,7 +652,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 		ajaxType: function() {
 			var self = this;
 			var data = {
-					text: self.selector.caseDes,
+					text: self.selector.caseDes
 			};
 			$.ajax({
 					url: 'http://47.92.38.167:8889/feature_query/case_type',
@@ -676,6 +678,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 						}
 						self.selector.caseTypeName = data[0]['reason'];
 						self.selector.caseType = data[0]['sub_reason_class'];
+						self.selector.second_reason = data[0]['second_reason'];
 						if(self.element.$caseTypeBox.hasClass('show')){
 							return;
 						}else{
@@ -695,7 +698,13 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 		},
 		ajax: function(pageNum,typeName,second_reason,reason_class) {
 			var self = this;
+			console.log(pageNum,typeName,second_reason,reason_class);
+			typeName = typeName || self.selector.caseTypeName;
+			second_reason = second_reason || self.selector.second_reason;
+			reason_class = reason_class || self.selector.caseType;
+			var region = $('.j-city').text();
 			var ajaxData = {
+				"region": region,
 				"page_num": pageNum+1,
 				"page_count": 10,
 				"reason": {}
@@ -707,11 +716,12 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			}else{
 				ajaxData.reason['reason_2'] = second_reason;
 				ajaxData.reason["reason_" + reason_class] = typeName;
-				this.selector.reasonClass = reason_class;
+				this.selector.caseType = reason_class;
 			}
 			this.selector['second_reason'] = ajaxData.reason['reason_2'];
-			this.selector['reasonClass'] = reason_class;
+			this.selector['caseType'] = reason_class;
 			ajaxData.reason["reason_" + reason_class] = typeName;
+			console.log('ajaxData',ajaxData);
 			$.ajax({
 					url: 'http://47.92.38.167:8889/static_query/lawyer_list',
 				type: 'POST',
@@ -730,7 +740,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					// 	pageNum : pageNum,
 					// }
 			})
-			.done(self.successAjax.bind(this,typeName))
+			.done(self.successAjax.bind(this))
 			.fail(function(jqXHR, textStatus) {
 				console.log(jqXHR);
 
@@ -740,15 +750,12 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				console.log("complete");
 			});
 		},
-		successAjax: function(typeName,json){
+		successAjax: function(json){
 			console.log('json',json);
-			console.log('typeName',typeName);
 			var self = this;
 			if(!!json){
 				var data = (typeof json == 'object') ? json : JSON.parse(json)
 				var dataList = $("#lawyerList");
-				typeName = $("#caseType").find("li").eq(0).text()||typeName;
-				console.log('renderdata0',data);
 				if(data.code != 0){
 					alert("搜索没找到数据,请返回修改！")
 					$(".g-loding").hide();
@@ -761,15 +768,15 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					$(".g-loding").hide();
 					$(".g-lawyer-list").show();
 					$(".scroll-top").show();
-					
+					console.log('data',data);
 					dataList.fadeIn(1000, function() {
-						console.log('renderdata',data);
-						dataList.html(ejs.render(self.mosaic.lasyerList2,{data:data.data,typeName:typeName}))
+						console.log('data',data);
+						dataList.html(ejs.render(self.mosaic.lasyerList2,{data:data.data,typeName:self.selector.caseTypeName}))
 						$("a.lawyer-record").on("click", self.replaceBrowserHistory.bind(self));
 					});
 					console.log('self.testing.callback',self.testing.callback);
 					if(self.testing.callback == false){
-						self.initPagination(json.data.max_page_num);
+						self.initPagination(data.max_page_num);
 						self.testing.callback = true;
 					}
 					$(".j-random").html($(".m-synopsis").length);

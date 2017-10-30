@@ -23,6 +23,7 @@ require.config({
 		'pagination':"jquery.pagination",
 		'tabCollpase': "tabcollapse",
 		'vague': "foggy",
+		'echartsData': "echartsData"
 	},
 	shim:{
 		multiSelect:{

@@ -99,29 +99,29 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 
 			this.mosaic = {
 				caseTXT : [
-					'<% for (var i = 0; i < data.dataList.length; i++) { %>',
+					'<% for (var i = 0; i < data.length; i++) { %>',
                     '    <div class="result-box" id="result-item-<%=(i+1)+lastResult%>">',
-                    '        <a class="result-main" href="case-detail.html?id=<%=data.dataList[i]._id%>" >',
+                    '        <a class="result-main" href="<%-data[i].source_url%>" >',
                     '            <div class="result-title">',
                     '                <div class="colelem result-title-detail">',
-                    '                   <p><%-data.dataList[i].title%></p>',
+                    '                   <p><%-data[i].title%></p>',
                     '                </div>',
                     '                <div class="colelem result-info">',
-                    '                    <p><%-data.dataList[i].court%><span class="f-ml20"><%=data.dataList[i].caseId%></span><span class="f-ml20"><%=data.dataList[i].caseDate%></span></p>',
+                    '                    <p><%-data[i].court%><span class="f-ml20"><%=data[i].wenshu_id%></span><span class="f-ml20"><%=data[i].publish_date%></span></p>',
                     '                </div>',
                     '                <div class="colelem result-hr">',
                     '                </div>',
                     '                <div class="colelem result-reason">',
-                    '                    <p>「  裁判理由  」</p>',
+                    '                    <p>「  案件号  」</p>',
                     '                </div>',
                     '                <div class="colelem result-reason-detail">',
-                    '                <p><%-data.dataList[i].reasonList%></p>',
+                    '                <p><%-data[i].case_num%></p>',
                     '                </div>',
                     '                <div class="colelem result-res">',
-                    '                    <p>「  裁判结果  」</p>',
+                    '                    <p>「 审判时间  」</p>',
                     '                </div>',
                     '                <div class="colelem result-res-detail">',
-                    '                <p><%-data.dataList[i].resultList%></p>',
+                    '                <p><%-data[i].judgement_date%></p>',
                     '                </div>',
                     '            </div>',
                     '        </a>',
@@ -550,30 +550,43 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 			if(!filter.casetype){
 				filter.casetype = [];
 			}
+			var reqData = {"text": arg.text};
+			console.log('reqData',reqData);
 			$.ajax({
-				url: '../../list.php',
+
+				url: 'http://47.92.38.167:8889/feature_query/case_type',
 
 				type: 'POST',
 				dataType: 'JSON',
-				data: {
-					q: {
-						"text": arg.text,
-						"filter": {
-							"casetype": filter.casetype,
-							"court_id": filter.courtId,
-							"year": filter.year,
-							"level": filter.level,
-							"court_level": filter.courtLevel,
-							"doctype": filter.doctype
-						},
-						"keyWord": arg.keyword,
-						"orderBy": arg.orderBy,
-						"pageNum": arg.pageNum
-					}
-				},
+				data: JSON.stringify(reqData),
 			})
 			//.done(self.successAjax.bind(this))
-			.done(callback.bind(this))
+			.done((function(res){
+				var that = this;
+				var reqData = {
+					reason: {
+						'reason_2': res.data[0].second_reason
+					},
+					page_count: 20,
+					page_num: self.ajaxData.pageNum + 1
+				};
+				var sub_reason_class = res.data[0].sub_reason_class;
+				reqData.reason['reason_'+sub_reason_class] = res.data[0].reason;
+				$.ajax({
+					url: 'http://47.92.38.167:8889/static_query/case_list',
+	
+					type: 'POST',
+					dataType: 'JSON',
+					data: JSON.stringify(reqData),
+				})
+				.done(callback.bind(that))
+				.fail(function() {
+					$('#content-load').hide();
+					$('#result-scroll-load').hide();
+					$('#content-title').show();
+					self.resetParams();
+				})
+			}).bind(this))
 			.fail(function() {
 				alert("服务器错误!");
 				$('#content-load').hide();
@@ -588,10 +601,10 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 
 		successAjax : function(json) {
 			var self = this;
+			console.log('this',this);
 			if (!!json) {
 				var data = (typeof json == 'object') ? json : JSON.parse(json);
-				var datalist = data.dataList;
-				if (data.error_code == 404) {
+				if (data.code != 0) {
 					alert("未找到数据!");
 					$('#content-load').hide();
 					$('.m-not-found').show();
@@ -601,15 +614,16 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 						"position":"relative"
 					})
 				} else {
-					var i = datalist.length;
+					var i = 20;
 					$('#scrollLoad').hide();
 					$('#content-load').hide();
 					$('.m-not-found').hide();
 					$(".nav-mask").hide();
 					$('#content-tag').show();
 					$("#result-container").find(".result-box").remove();
-					this.element.$scrollTop.show();
-					$("#result-container").show().html(ejs.render(this.mosaic.caseTXT,{data:data, lastResult : this.selector.lastResult}))
+					$("#scroll-top").show();
+					console.log('data',data);
+					$("#result-container").show().html(ejs.render(this.mosaic.caseTXT,{data:data.data, lastResult : this.selector.lastResult}))
 					$("a.result-main").on("click", this.replaceBrowserHistory.bind(this));
 
 					this.selector.lastResult = i+this.selector.lastResult;
@@ -632,12 +646,11 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 			var self = this;
 			if (!!json) {
 				var data = (typeof json == 'object') ? json : JSON.parse(json);
-				var datalist = data.dataList;
 				if (data.error_code == 404) {
 					alert("未找到数据!");
 				}else{
-					var i = datalist.length;
-					$("#result-container").show().append(ejs.render(this.mosaic.caseTXT,{data:data, lastResult : this.selector.lastResult}))
+					var i = data.data.length;
+					$("#result-container").show().append(ejs.render(this.mosaic.caseTXT,{data:data.data, lastResult : this.selector.lastResult}))
 					$("a.result-main").on("click", this.replaceBrowserHistory.bind(this));
 					this.selector.lastResult = i+this.selector.lastResult;
 				}
