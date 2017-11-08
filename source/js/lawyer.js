@@ -496,7 +496,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			var caseTipsVal = this.element.$caseTips.val();
 			this.selector.caseDes = "";
 			var order = $(".order input").val();
-			if($el.hasClass('btn-success')){
+			//if($el.hasClass('btn-success')){
 				if( order!= ""){
 					this.selector.disputeArr.push(order);
 				}
@@ -519,7 +519,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					});
 				}
 
-			}
+			//}
 		},
 		modifyCase: function(){
 			$(".g-lawyer").show();
@@ -807,7 +807,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			$(".city-pop").html(ejs.render(self.mosaic.city,{data : data, id : id}))
 			var c = this.element.$cityName || '';
 			for (var i = 0; i < data[id].length; i++) {
-				var cityName = c.replace("市",'');
+				//var cityName = c.replace("市",'');
 				if(data[id][i].n == cityName){
 					$(".j-city").attr("id", data[id][i].i)
 				}
