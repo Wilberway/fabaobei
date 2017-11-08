@@ -44,7 +44,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					city = history.state.cityName;
 			} else {
 				window.ADDR = window.ADDR || {"ip":"","provId":"","provName":"全国","cityId":"","cityName":"不限"};
-				prov = window.ADDR.provName;
+				prov = window.ADDR.provName || '';
 				city = window.ADDR.region;
 			}
 			this.element = {
@@ -637,7 +637,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			var self = this;
 			$.ajax({
 				url: 'source/js/loc.json',
-				type: 'POST',
+				type: 'GET',
 				dataType: 'json',
 				data: {},
 			})
@@ -805,8 +805,9 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			var data = (typeof json == 'object') ? json : JSON.parse(json)
 			var id = $(".j-prov").attr("id");
 			$(".city-pop").html(ejs.render(self.mosaic.city,{data : data, id : id}))
+			var c = this.element.$cityName || '';
 			for (var i = 0; i < data[id].length; i++) {
-				var cityName = this.element.$cityName.replace("市",'');
+				var cityName = c.replace("市",'');
 				if(data[id][i].n == cityName){
 					$(".j-city").attr("id", data[id][i].i)
 				}
