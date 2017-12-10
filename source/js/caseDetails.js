@@ -113,13 +113,14 @@ define(["jquery","ejs","common","highlighter","bootstrap3"],function(jquery){
 			}
 		}
 	App.prototype = {
-		paperId: getQueryString('id'),
+        paperId: getQueryString('id'),
+        reason_2: decodeURI(escape(getQueryString('reason'))),
 		constructor : App,
 
 		init: function(){
 			this.element = {
 				$detailNav: $("#detail-nav"),
-				$file: $("#file"),
+				$file: $(".g-judgment.section"),
 				$caseLawyer: $("caseLawyer"),
 				$scrollTop: $("#scroll-top"),
 				$lawList: $(".lawyer-list"),
@@ -149,7 +150,13 @@ define(["jquery","ejs","common","highlighter","bootstrap3"],function(jquery){
 	                '	<% } %>',
 	                '</ul>',
 				].join(""),
-
+				fileTxt2:[
+					'<section class="summary">',
+					'	<div class="content">',
+					'		<h4><%=data.title%></h4>',
+					'	</div>',
+					'</section>'
+				],
 				fileTxt: [
                     '<h1 id="file-name"><%=data.title%></h1>',
                     '<h6>来源：中国裁判文书网<!--<span>浏览：350</span>--></h6>',
@@ -441,18 +448,15 @@ define(["jquery","ejs","common","highlighter","bootstrap3"],function(jquery){
 			//查询分类
 			var self = this;
 			$.ajax({
-					url: "../../detail.php",
-
+				url: "http://47.92.38.167:8889/static_query/case_doc",
 				type: 'POST',
 				dataType: 'JSON',
 				data: {
-					q:{
-						"id": App.prototype.paperId,
-						"text":localStorage.data,
-						"keyword":"",
-						"type":""
+					"wenshu_id": App.prototype.paperId,
+					'reason': {
+						'reason_2': App.prototype.reason_2
 					}
-				},
+				}
 			})
 			.done(self.successAjax.bind(this))
 			.fail(function() {
@@ -474,10 +478,10 @@ define(["jquery","ejs","common","highlighter","bootstrap3"],function(jquery){
 			var $judgment = $("#judgment");
 			var lastTag = {
 				'n' : "",
-				'i' : 0,
+				'i' : 0
 			};
 
-			this.element.$file.html(ejs.render(this.mosaic.fileTxt,{data: data,lastTag : lastTag}));
+			this.element.$file.html(ejs.render(this.mosaic.fileTxt2,{data: fetchData.data.fullJudgement,lastTag : lastTag}));
 			//this.element.$detailNav.html(ejs.render(this.mosaic.detailNav,{data: data,lastTag : lastTag}))
 			//this.element.$lawList.html(ejs.render(this.mosaic.lawList,{data:data}))
 			//localStorage.caseId = data._id;

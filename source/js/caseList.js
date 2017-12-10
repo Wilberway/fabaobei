@@ -30,7 +30,7 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 	App.prototype = {
 
 		constructor : App,
-
+		reason_2: '',
 		init: function(){
 			$("#filter-form").hide();
 			$.multiSelect({
@@ -101,7 +101,7 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 				caseTXT : [
 					'<% for (var i = 0; i < data.length; i++) { %>',
                     '    <div class="result-box" id="result-item-<%=(i+1)+lastResult%>">',
-                    '        <a class="result-main" href="<%-data[i].source_url%>" >',
+                    '        <a class="result-main" href="./caseDetail.html?id=<%-data[i].wenshu_id%>&reason=<%=encodeURI(reason)%>" >',
                     '            <div class="result-title">',
                     '                <div class="colelem result-title-detail">',
                     '                   <p><%-data[i].title%></p>',
@@ -570,6 +570,7 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 					page_count: 20,
 					page_num: self.ajaxData.pageNum + 1
 				};
+				App.prototype.reason_2 = res.data[0].second_reason;
 				var sub_reason_class = res.data[0].sub_reason_class;
 				reqData.reason['reason_'+sub_reason_class] = res.data[0].reason;
 				$.ajax({
@@ -623,7 +624,7 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 					$("#result-container").find(".result-box").remove();
 					$("#scroll-top").show();
 					console.log('data',data);
-					$("#result-container").show().html(ejs.render(this.mosaic.caseTXT,{data:data.data, lastResult : this.selector.lastResult}))
+					$("#result-container").show().html(ejs.render(this.mosaic.caseTXT,{data:data.data, reason: App.prototype.reason_2,lastResult : this.selector.lastResult}))
 					$("a.result-main").on("click", this.replaceBrowserHistory.bind(this));
 
 					this.selector.lastResult = i+this.selector.lastResult;
@@ -650,7 +651,7 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 					alert("未找到数据!");
 				}else{
 					var i = data.data.length;
-					$("#result-container").show().append(ejs.render(this.mosaic.caseTXT,{data:data.data, lastResult : this.selector.lastResult}))
+					$("#result-container").show().append(ejs.render(this.mosaic.caseTXT,{data:data.data, reason: App.prototype.reason_2,lastResult : this.selector.lastResult}))
 					$("a.result-main").on("click", this.replaceBrowserHistory.bind(this));
 					this.selector.lastResult = i+this.selector.lastResult;
 				}
