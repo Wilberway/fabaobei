@@ -1903,7 +1903,8 @@ img {
       font-size: 12px;
       color: #f15a24; }
   .g-lawyer .m-choose-btn {
-    text-align: center; }
+    text-align: center;
+    margin-top: 150px;}
     .g-lawyer .m-choose-btn a {
       cursor: pointer;
       width: 150px;
@@ -1911,7 +1912,8 @@ img {
       line-height: 40px;
       font-size: 14px; 
       background-color: #5068a9;
-      color: #fff;}
+      color: #fff;
+    margin: 0 30px;}
       .g-lawyer .m-choose-btn a:hover {
         background-color: #86a6df;
       }

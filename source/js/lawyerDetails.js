@@ -317,25 +317,34 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
 		    $('.g-body').css({
 		    	"min-height" : he+"px",
 			});
-			this.filterData(chartsData);
+			//this.filterData(chartsData);
 		},
 		revealPhoneInfo: function() {
 			$("#reveal-phone-btn").parent().hide();
 			$("#phone-info").show();
 			this.onPurchaseBtnClicked();
 		},
-		filterData: function (chartsData){//处理数据显示在图表上
+		filterData: function (detail){//处理数据显示在图表上
 			// 基于准备好的dom，初始化echarts实例
 			var myChart1 = echarts.init(document.getElementById('circleChart1'));
 			var myChart2 = echarts.init(document.getElementById('circleChart2'));
-			console.log('chartsData',chartsData);
+            //console.log('chartsData',chartsData);
+           // console.log('chartsData',echartsData);
+			for(var i in detail){
+                chartsData.option1.series[0].data.push({value: detail[i].count,name:detail[i].reason2});
+            }
+            for(var j in detail){
+				var str = detail[j].reason2.length > 5 ? detail[j].reason2.substring(0,6) + '...' : detail[j].reason2;
+                chartsData.option2.xAxis.data.push(str);
+                chartsData.option2.series[0].data.push(detail[j].suc_rate);
+            }
+
 			// 指定图表的配置项和数据
 			var option1 = chartsData.option1;
 			var option2 = chartsData.option2;
 		
 			// 使用刚指定的配置项和数据显示图表。
 			//if(params == 1){
-		
 				myChart1.setOption(option1);
 			//}else if(params == 2){//饼图
 				//$('#echart1').hide();
@@ -713,6 +722,7 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
 
 				$(".m-synopsis").find(".name").text(App.prototype.name);
 				$(".m-synopsis").find(".office").text(App.prototype.location);
+				self.filterData(data.detail);
 				//self.element.$mTab.html(ejs.render(self.mosaic.tab,{data:data.data,name:App.prototype.name,location:App.prototype.location}));
 					$('#report-tab').tabCollapse({
 						tabsClass: 'hidden-xs',

@@ -808,9 +808,9 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			var c = this.element.$cityName || '';
 			for (var i = 0; i < data[id].length; i++) {
 				//var cityName = c.replace("市",'');
-				if(data[id][i].n == c){
+				//if(data[id][i].n == c){
 					$(".j-city").attr("id", data[id][i].i)
-				}
+				//}
 			};
 		}
 	}

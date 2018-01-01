@@ -2780,11 +2780,14 @@ div.panel-heading {
   background-color: rgba(25,25,25,0.8);
 }
 .g-index.g-foot {
-  position: absolute;
+  position: relative;
   width:100%;
   background-color: rgba(25,25,25,0.8);
   height:125px;
   margin-top: -125px;
+}
+.g-index .g-wrap, .g-wrap-full{
+  padding-bottom: 0;
 }
 .navbar-tit{
   float:left;
