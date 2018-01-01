@@ -22,9 +22,9 @@ var chartsData = {
 			}
 		},
 		series: [{
-			name: '案由',
+			name: '胜诉率',
 			type: 'bar',
-			data: [],
+			data: [50, 40, 36, 30, 45,65],
 			label: {}
 		}]
 	},

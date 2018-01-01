@@ -183,7 +183,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					'	<div class="m-case row">',
 					'		<div class="col-xs-12 col-sm-10 col-sm-offset-2">',
 					'			<dt>类似案件</dt>',
-					'			<dd><a class="j-caseDetails" href="caseDetail.html?id=<%=data.dataList[i].similarCase.id%>&reason=<%=this.selector.second_reason%>" target="_blank"><%=data.dataList[i].similarCase.caseName%></a><span><%=data.dataList[i].similarCase.judgementDate%></span></dd>',
+					'			<dd><a class="j-caseDetails" href="case-detail.html?id=<%=data.dataList[i].similarCase.id%>" target="_blank"><%=data.dataList[i].similarCase.caseName%></a><span><%=data.dataList[i].similarCase.judgementDate%></span></dd>',
 					'			<dd class="dispute">争议焦点：',
 					'			<%if(data.dataList[i].similarCase.caseControversy.length == 0){%>',
 					'				暂无',
@@ -808,7 +808,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			var c = this.element.$cityName || '';
 			for (var i = 0; i < data[id].length; i++) {
 				//var cityName = c.replace("市",'');
-				if(data[id][i].n == c){
+				if(data[id][i].n == cityName){
 					$(".j-city").attr("id", data[id][i].i)
 				}
 			};

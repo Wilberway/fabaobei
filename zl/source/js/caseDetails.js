@@ -153,85 +153,10 @@ define(["jquery","ejs","common","highlighter","bootstrap3"],function(jquery){
 				fileTxt2:[
 					'<section class="summary">',
 					'	<div class="content">',
-					'	<% if(data.title){ %>',
-                    '		<h2><%=data.title%></h2>',
-                    '	<% }else{ %>',
-                    '		<h2>案例标题</h2>',
-                    '	<% } %>',
+					'		<h4><%=data.title%></h4>',
 					'	</div>',
-					'</section>',
-                    '<section class="basic-info">',
-					'	<h3>基本信息</h3>',
-					'	<% for(var i = 0; i < data.party_info.split("\\n").length; i++){%>',
-					'		<p><%=data.party_info.split("\\n")[i] %></p>',
-					'	<% } %>',
-					'</section>',
-					'<% if(data.trail_flow){ %>',
-					'<section class="paragraph1">',
-                    '	<h3>审理经过</h3>',
-                    '	<% for(var i = 0; i < data.trail_flow.split("\\n").length; i++){%>',
-                    '		<p><%=data.trail_flow.split("\\n")[i].replace(/<[^<]*>/g,"") %></p>',
-                    '	<% } %>',
-					'</section>',
-					'<% } %>',
-                    '<% if(data.plaintiff_point){ %>',
-                    '<section class="paragraph2">',
-                    '	<h3>原告诉称</h3>',
-                    '	<% for(var i = 0; i < data.plaintiff_point.split("\\n").length; i++){%>',
-                    '		<p><%=data.plaintiff_point.split("\\n")[i].replace(/<[^<]*>/g,"") %></p>',
-                    '<% } %>',
-                    '</section>',
-                    '<% } %>',
-                    '<% if(data.defendant_point){ %>',
-                    '<section class="paragraph3">',
-                    '	<h3>被告辩称</h3>',
-                    '	<% for(var i = 0; i < data.defendant_point.split("\\n").length; i++){%>',
-                    '		<p><%=data.defendant_point.split("\\n")[i].replace(/<[^<]*>/g,"") %></p>',
-                    '<% } %>',
-                    '</section>',
-                    '<% } %>',
-                    '<% if(data.court_verification){ %>',
-                    '<section class="paragraph4">',
-                    '	<h3>本院查明</h3>',
-                    '	<% for(var i = 0; i < data.court_verification.split("\\n").length; i++){%>',
-                    '		<p><%=data.court_verification.split("\\n")[i].replace(/<[^<]*>/g,"") %></p>',
-                    '	<% } %>',
-                    '</section>',
-                    '<% } %>',
-                    '<% if(data.court_point){ %>',
-                    '<section class="paragraph5">',
-                    '	<h3>本院认为</h3>',
-                    '	<% for(var i = 0; i < data.court_point.split("\\n").length; i++){%>',
-                    '		<p><%=data.court_point.split("\\n")[i].replace(/<[^<]*>/g,"") %></p>',
-                    '	<% } %>',
-                    '</section>',
-                    '<% } %>',
-                    '<% if(data.judge_result){ %>',
-                    '<section class="paragraph6">',
-                    '	<h3>裁判结果</h3>',
-                    '	<% for(var i = 0; i < data.judge_result.split("\\n").length; i++){%>',
-                    '		<p><%=data.judge_result.split("\\n")[i].replace(/<[^<]*>/g,"") %></p>',
-                    '	<% } %>',
-                    '</section>',
-                    '<% } %>',
-                    '<% if(data.judge_person){ %>',
-                    '	<h3>审判人员</h3>',
-                    '	<% for(var i = 0; i < data.judge_person.split("\\n").length; i++){%>',
-                    '		<p><%=data.judge_person.split("\\n")[i] %></p>',
-                    '	<% } %>',
-                    '</section>',
-                    '<% } %>',
-                    '<% if(data.judge_times){ %>',
-                    '	<h3>审判日期</h3>',
-                    '	<p><%=data.judge_times %></p>',
-                    '</section>',
-                    '<% } %>',
-                    '<% if(data.court_clerk){ %>',
-                    '	<h3>书记员</h3>',
-                    '	<p><%=data.court_clerk %></p>',
-                    '</section>',
-                    '<% } %>'
-				].join(""),
+					'</section>'
+				],
 				fileTxt: [
                     '<h1 id="file-name"><%=data.title%></h1>',
                     '<h6>来源：中国裁判文书网<!--<span>浏览：350</span>--></h6>',
@@ -522,17 +447,16 @@ define(["jquery","ejs","common","highlighter","bootstrap3"],function(jquery){
 		ajaxPaper:function(){
 			//查询分类
 			var self = this;
-			var postData = {
-                "wenshu_id": App.prototype.paperId,
-                'reason': {
-                    'reason_2': App.prototype.reason_2
-                }
-			};
 			$.ajax({
 				url: "http://47.92.38.167:8889/static_query/case_doc",
 				type: 'POST',
 				dataType: 'JSON',
-				data: JSON.stringify(postData)
+				data: {
+					"wenshu_id": App.prototype.paperId,
+					'reason': {
+						'reason_2': App.prototype.reason_2
+					}
+				}
 			})
 			.done(self.successAjax.bind(this))
 			.fail(function() {
@@ -556,9 +480,8 @@ define(["jquery","ejs","common","highlighter","bootstrap3"],function(jquery){
 				'n' : "",
 				'i' : 0
 			};
-            console.log(data.data.party_info);
-            console.log(data.data.party_info.split("\n"));
-			this.element.$file.html(ejs.render(this.mosaic.fileTxt2,{data: data.data,lastTag : lastTag}));
+
+			this.element.$file.html(ejs.render(this.mosaic.fileTxt2,{data: fetchData.data.fullJudgement,lastTag : lastTag}));
 			//this.element.$detailNav.html(ejs.render(this.mosaic.detailNav,{data: data,lastTag : lastTag}))
 			//this.element.$lawList.html(ejs.render(this.mosaic.lawList,{data:data}))
 			//localStorage.caseId = data._id;

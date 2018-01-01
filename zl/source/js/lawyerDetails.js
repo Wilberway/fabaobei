@@ -190,6 +190,7 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
 					'	<div class="u-line"></div>',
 					'	<div class="m-skilful">',
 					'		<div>',
+
 					'			<dt>擅长领域</dt>',
 					'			<dd>',
 					'			<% if(data.detail.length == 0){ %>',
@@ -208,7 +209,7 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
 					'				<dd>暂无</dd>',
 					'			<% }else{ %>',
                     '				<% for (var i = 0; i < 3; i++) { %>',
-					'       <dd><a class="caseName" href="caseDetail.html?id=<%=data.detail[i].doc[0].wenshu_id%>&reason=<%=data.detail[i].reason2%>" target="_blank"><%=data.detail[i].doc[0].title%></a></dd>',
+					'       <dd><a class="caseName" href="case-detail.html?id=<%=data.detail[i].doc[0].wenshu_id%>" target="_blank"><%=data.detail[i].doc[0].title%></a></dd>',
                     '				<% }; %>',
 					'			<% } %>',
 					'       </div>',
@@ -701,6 +702,7 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
 				type: 'POST',
 				dataType: 'json',
 				data: JSON.stringify(reqData)
+
 			})
 			.done(function(json) {
 				var data = (typeof json == 'object') ? json.data : JSON.parse(json).data;
@@ -795,6 +797,7 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
 				}
 			}
 			this.hideEmptyDataForMobile();
+
 		},
 		getColorForPieLabel: function(name) {
 			if (name == "胜诉") {
