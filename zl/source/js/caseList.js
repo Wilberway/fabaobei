@@ -74,60 +74,73 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 			this.api = {
 
 			};
-			if (history.state != null) {
-				this.selector.lastResult = history.state.lastResult;
-				this.selector.lastHeight = history.state.lastHeight;
-				this.selector.firstTime = history.state.lastFirstTime;
-				this.ajaxData.pageNum = history.state.ajaxPageNum;
-				this.ajaxData.text = history.state.ajaxText;
-				this.ajaxData.keyword = history.state.ajaxKeyWord;
-				this.ajaxData.orderBy = history.state.ajaxOrderBy;
-				$("#content-tag").html(history.state.contentTag);
-				$("#content-tag").show();
-
-				$("#keyword").val(history.state.keyword);
-				this.element.$textarea.html(history.state.text);
-				this.element.$textarea.addClass("textColor");
-				$("#result-container").html(history.state.results);
-				this.showResults();
-
-				window.scrollTo(0,history.state.topHeight);
-				$("a.result-main").on("click", this.replaceBrowserHistory.bind(this));
-
-			}
+			// if (history.state != null) {
+			// 	this.selector.lastResult = history.state.lastResult;
+			// 	this.selector.lastHeight = history.state.lastHeight;
+			// 	this.selector.firstTime = history.state.lastFirstTime;
+			// 	this.ajaxData.pageNum = history.state.ajaxPageNum;
+			// 	this.ajaxData.text = history.state.ajaxText;
+			// 	this.ajaxData.keyword = history.state.ajaxKeyWord;
+			// 	this.ajaxData.orderBy = history.state.ajaxOrderBy;
+			// 	$("#content-tag").html(history.state.contentTag);
+			// 	$("#content-tag").show();
+            //
+			// 	$("#keyword").val(history.state.keyword);
+			// 	this.element.$textarea.html(history.state.text);
+			// 	this.element.$textarea.addClass("textColor");
+			// 	$("#result-container").html(history.state.results);
+			// 	this.showResults();
+            //
+			// 	window.scrollTo(0,history.state.topHeight);
+			// 	$("a.result-main").on("click", this.replaceBrowserHistory.bind(this));
+            //
+			// }
 
 
 			this.mosaic = {
 				caseTXT : [
 					'<% for (var i = 0; i < data.length; i++) { %>',
-                    '    <div class="result-box" id="result-item-<%=(i+1)+lastResult%>">',
-                    '        <a class="result-main" href="./caseDetail.html?id=<%-data[i].wenshu_id%>&reason=<%=encodeURI(reason)%>" >',
+					'	<% if (data[i].dev_name){ %>',
+                    '    <div class="result-box" id="result-item-<%=data[i].trs_id%>">',
+                    '        <a class="result-main" href="./caseDetail.html?id=<%-data[i].wenshu_id%>&reason=<%=encodeURI(data[i].trs_id)%>" >',
                     '            <div class="result-title">',
                     '                <div class="colelem result-title-detail">',
-                    '                   <p><%-data[i].title%></p>',
+                    '                   <p><%-data[i].dev_name%></p>',
                     '                </div>',
                     '                <div class="colelem result-info">',
-                    '                    <p><%-data[i].court%><span class="f-ml20"><%=data[i].wenshu_id%></span><span class="f-ml20"><%=data[i].publish_date%></span></p>',
+                    '                    <p><%-data[i].classify_no%><span class="f-ml20"><%=data[i].apply_person%></span><span class="f-ml20"><%=data[i].apply_date%></span></p>',
                     '                </div>',
                     '                <div class="colelem result-hr">',
                     '                </div>',
-                    '                <div class="colelem result-reason">',
-                    '                    <p>「  案件号  」</p>',
+                	'				<div class="colelem result-tit">',
+                	'                    <p>「  专利描述 」</p>',
+                	'                </div>',
+                	'                <div class="colelem result-context">',
+                	'                <p><%-data[i].abstract%></p>',
+                	'                </div>',
+                    '                <div class="colelem result-tit">',
+                    '                    <p>「  专利号  」</p>',
                     '                </div>',
-                    '                <div class="colelem result-reason-detail">',
-                    '                <p><%-data[i].case_num%></p>',
+                    '                <div class="colelem result-context">',
+                    '                <p><%-data[i].patent_no%></p>',
                     '                </div>',
-                    '                <div class="colelem result-res">',
-                    '                    <p>「 审判时间  」</p>',
+                    '                <div class="colelem result-tit">',
+                    '                    <p>「 公开时间  」</p>',
                     '                </div>',
-                    '                <div class="colelem result-res-detail">',
-                    '                <p><%-data[i].judgement_date%></p>',
+                    '                <div class="colelem result-context">',
+                    '                <p><%-data[i].public_date%></p>',
+                    '                </div>',
+                    '                <div class="colelem result-tit">',
+                    '                    <p>「 公开编号  」</p>',
+                    '                </div>',
+                    '                <div class="colelem result-context">',
+                    '                <p><%-data[i].public_no%></p>',
                     '                </div>',
                     '            </div>',
                     '        </a>',
                     '    </div>',
+                    '	<% } %>',
                     '<% } %>',
-
 				].join(""),
 			};
 
@@ -550,11 +563,12 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 			if(!filter.casetype){
 				filter.casetype = [];
 			}
-			var reqData = {"text": arg.text};
+            //var reqData = {"text": arg.text, "agent":arg.keyword,"page":10, "num":12};
+            var reqData = {"text": arg.text};
 			console.log('reqData',reqData);
 			$.ajax({
 
-				url: 'http://47.92.38.167:8889/feature_query/case_type',
+				url: 'http://47.92.38.167:8889/feature_query/patent_classify',
 
 				type: 'POST',
 				dataType: 'JSON',
@@ -564,17 +578,12 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 			.done((function(res){
 				var that = this;
 				var reqData = {
-					reason: {
-						'reason_2': res.data[0].second_reason
-					},
-					page_count: 20,
-					page_num: self.ajaxData.pageNum + 1
+					"classify_no": res.data[0][0],
+					"page":10,
+					"num":100
 				};
-				App.prototype.reason_2 = res.data[0].second_reason;
-				var sub_reason_class = res.data[0].sub_reason_class;
-				reqData.reason['reason_'+sub_reason_class] = res.data[0].reason;
 				$.ajax({
-					url: 'http://47.92.38.167:8889/static_query/case_list',
+					url: 'http://47.92.38.167:8889/static_query/patent_info',
 	
 					type: 'POST',
 					dataType: 'JSON',
@@ -602,7 +611,7 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 
 		successAjax : function(json) {
 			var self = this;
-			console.log('this',this);
+			console.log('json',json);
 			if (!!json) {
 				var data = (typeof json == 'object') ? json : JSON.parse(json);
 				if (data.code != 0) {
@@ -624,7 +633,7 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 					$("#result-container").find(".result-box").remove();
 					$("#scroll-top").show();
 					console.log('data',data);
-					$("#result-container").show().html(ejs.render(this.mosaic.caseTXT,{data:data.data, reason: App.prototype.reason_2,lastResult : this.selector.lastResult}))
+					$("#result-container").show().html(ejs.render(this.mosaic.caseTXT,{data:data.data}))
 					$("a.result-main").on("click", this.replaceBrowserHistory.bind(this));
 
 					this.selector.lastResult = i+this.selector.lastResult;

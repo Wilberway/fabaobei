@@ -1422,10 +1422,10 @@ img {
 .g-describe .m-keyword {
   margin-left: 15px;
   margin-bottom: 20px; }
-.g-describe .m-keyword input {
-  padding: 6px;
-  border: 1px solid #5068a9;
-  box-shadow: 0 0 5px #5068a9; }
+.g-describe .m-keyword input {}
+  /*padding: 6px;*/
+  /*border: 1px solid #5068a9;*/
+  /*box-shadow: 0 0 5px #5068a9; }*/
 .g-describe .m-keyword .textColor {
   background: #fff;
   color: #444444;
@@ -1612,6 +1612,12 @@ img {
   text-decoration: none; }
 .g-describe .g-result .m-result .result-box .result-main .result-title {
   padding: 17px 0px 32px; }
+.g-describe .g-result .m-result .result-box .result-main .result-tit{
+  margin: 10px 0;
+}
+.g-describe .g-result .m-result .result-box .result-main .result-tit{
+color: #0f0f0f;
+}
 .g-describe .g-result .m-result .result-box .result-main .result-title-detail {
   z-index: 136;
   width: 99%;
