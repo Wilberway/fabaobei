@@ -15,7 +15,7 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
 	App.prototype = {
 		name : decodeURI(escape(getQueryString("name"))),
 		location : decodeURI(escape(getQueryString("location"))),
-		// caseName : encodeURI(getQueryString("caseName")),
+		caseName : encodeURI(getQueryString("caseName")),
 		constructor : App,
 
 		init: function(){
@@ -702,6 +702,7 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
 			var self = this;
 			console.log(localStorage);
 			var reqData = {
+				reason: {reason_4: ""},
 				lawyer_name : App.prototype.name,
 				lawyer_location : App.prototype.location,
 			};

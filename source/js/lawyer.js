@@ -212,7 +212,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				lasyerList2 : [
 					'<% for (var i = 0; i < data.length; i++) { %>',
 					'<div class="m-synopsis container">',
-					 '	<a href="details.html?name=<%=encodeURI(data[i].name)%>&location=<%=encodeURI(data[i].location)%>" class="f-jump lawyer-record">',
+					 '	<a href="details.html?name=<%=encodeURI(data[i].name)%>&location=<%=encodeURI(data[i].location)%>&reason=<%=typeName%>" class="f-jump lawyer-record">',
 					'		<div class="row">',
 					//'			<div class="m-portrait col-xs-3 col-sm-2">',
 					//头像
@@ -757,7 +757,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				var data = (typeof json == 'object') ? json : JSON.parse(json)
 				var dataList = $("#lawyerList");
 				if(data.code != 0){
-					alert("搜索没找到数据,请返回修改！")
+					alert("搜索没找到数据,请返回修改！");
 					$(".g-loding").hide();
 					$(".g-lawyer-list").hide();
 					$(".g-return").hide();
