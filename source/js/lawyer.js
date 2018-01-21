@@ -183,7 +183,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					'	<div class="m-case row">',
 					'		<div class="col-xs-12 col-sm-10 col-sm-offset-2">',
 					'			<dt>类似案件</dt>',
-					'			<dd><a class="j-caseDetails" href="caseDetail.html?id=<%=data.dataList[i].similarCase.id%>&reason=<%=this.selector.second_reason%>" target="_blank"><%=data.dataList[i].similarCase.caseName%></a><span><%=data.dataList[i].similarCase.judgementDate%></span></dd>',
+					'			<dd><a class="j-caseDetails" href="caseDetail.html?id=<%=data.dataList[i].similarCase.id%>&reason=<%=this.selector.second_reason%>&class=<%=this.selector.caseType%>" target="_blank"><%=data.dataList[i].similarCase.caseName%></a><span><%=data.dataList[i].similarCase.judgementDate%></span></dd>',
 					'			<dd class="dispute">争议焦点：',
 					'			<%if(data.dataList[i].similarCase.caseControversy.length == 0){%>',
 					'				暂无',
@@ -210,9 +210,9 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					'<% } %>',
 				].join(""),
 				lasyerList2 : [
-					'<% for (var i = 0; i < data.length; i++) { %>',
+					'<% for (var i = 0; i < data.data.length; i++) { %>',
 					'<div class="m-synopsis container">',
-					 '	<a href="details.html?name=<%=encodeURI(data[i].name)%>&location=<%=encodeURI(data[i].location)%>&reason=<%=typeName%>" class="f-jump lawyer-record">',
+					 '	<a href="details.html?name=<%=encodeURI(data.data[i].name)%>&location=<%=encodeURI(data.data[i].location)%>&typeName=<%=data.typeName%>&class=<%=data.caseType%>" class="f-jump lawyer-record">',
 					'		<div class="row">',
 					//'			<div class="m-portrait col-xs-3 col-sm-2">',
 					//头像
@@ -229,37 +229,37 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					// '				<% } %>',
 					//'			</div>',
 					'			<div class="m-character col-xs-12 col-sm-10">',
-					'				<h3><%=data[i].name%><span><%-data[i].lawyerInc%></span></h3>',
+					'				<h3><%=data.data[i].name%><span><%-data.data[i].lawyerInc%></span></h3>',
 					'				<div class="u-line hidden-xs"></div>',
 					'     </div>',
 					'     <div class="m-character col-xs-12 col-sm-10">',
 
 					'				<dl>',
 					'					<dt>案由：</dt>',
-					'						<% if(!typeName){ %>',
+					'						<% if(!data.typeName){ %>',
 					'							<dd>暂无</dd>',
 					'						<%}else{ %>',
-					'							<dd><%=typeName%></dd>',
+					'							<dd><%=data.typeName%></dd>',
 					'						<%} %>',
 					'					<dt>相关领域内办案数量：</dt>',
 					'					<dd class="blod">',
-					'					<% if(data[i].num == 0){ %>',
+					'					<% if(data.data[i].num == 0){ %>',
 					'						<span>暂无</span>',
 					'					<%}else{ %>',
-					'						<span><%=data[i].num %></span>',
+					'						<span><%=data.data[i].num %></span>',
 					'					<%} %>',
 					'					</dd>',
 					'					<dt>律师事务所：</dt>',
-					'						<% if(data[i].location == ""){ %>',
+					'						<% if(data.data[i].location == ""){ %>',
 					'							<dd>暂无</dd>',
 					'						<%}else{ %>',
-					'							<dd><%=data[i].location%></dd>',
+					'							<dd><%=data.data[i].location%></dd>',
 					'						<%} %>',
 					// '					<dt>执业年限：</dt>',
-					// '						<% if(data[i].workAge == "" || data[i].workAge == null){ %>',
+					// '						<% if(data.data[i].workAge == "" || data[i].workAge == null){ %>',
 					// '							<dd>暂无</dd>',
 					// '						<%}else{ %>',
-					// '							<dd><%=data[i].mainWorkLoc%></dd>',
+					// '							<dd><%=data.data[i].mainWorkLoc%></dd>',
 					// '						<%} %>',
 					'				</dl>',
 					'			</div>',
@@ -768,10 +768,14 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 					$(".g-loding").hide();
 					$(".g-lawyer-list").show();
 					$(".scroll-top").show();
-					console.log('data',data);
+					console.log('self.selector["caseType"]',self.selector['caseType']);
 					dataList.fadeIn(1000, function() {
-						console.log('data',data);
-						dataList.html(ejs.render(self.mosaic.lasyerList2,{data:data.data,typeName:self.selector.caseTypeName}))
+                        console.log('typeName',self.selector.caseTypeName);
+                        console.log('caseType',self.selector.caseType);
+
+						data.typeName = self.selector.caseTypeName;
+						data.caseType = self.selector.caseType;
+						dataList.html(ejs.render(self.mosaic.lasyerList2,{data:data}));
 						$("a.lawyer-record").on("click", self.replaceBrowserHistory.bind(self));
 					});
 					console.log('self.testing.callback',self.testing.callback);

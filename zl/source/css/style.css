@@ -1385,7 +1385,7 @@ img {
   border-color: #51c680; }
 
 .g-describe {
-  padding-top: 122px;
+  padding-top: 50px;
   min-height: 650px;
 }
 .g-describe .m-title {
@@ -2813,6 +2813,7 @@ div.panel-heading {
 }
 .g-describe .u-btn{
   text-align: center;
+  margin-top: 50px;
 }
 .g-describe .u-btn a{
   width: 150px;

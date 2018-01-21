@@ -3,6 +3,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 		if (history.state == null) {
 		this.selector = {
 			caseDes: "",//案情描述
+            caseDes2:"",
 			caseTypeBox: [],//案情类型ID库
 			caseType:[],//案情类型
 			disputeArr:[],//争议焦点库
@@ -17,7 +18,8 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 	} else {
 		var state = history.state;
 		this.selector = {
-			caseDes: state.caseDes,//案情描述
+            caseDes: state.caseDes,//案情描述
+            caseDes2: state.caseDes2,//案情描述
 			caseTypeBox: state.caseTypeBox,//案情类型ID库
 			caseType:state.caseType,//案情类型
 			disputeArr:state.disputeArr,//争议焦点库
@@ -49,7 +51,8 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				city = window.ADDR.region;
 			}
 			this.element = {
-				$caseTips: $("#caseTips"),//案例描述
+                $caseTips: $("#caseTips"),//案例描述
+                $caseTips2: $("#caseTips2"),//案例描述
 				$tipsSure: $("#tipsSure"),//完成输入
 				$caseTypeBox: $(".m-case-type"),//案件类型
                 $recommend: $("#recommend"),//开始推荐代理人
@@ -221,12 +224,6 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				].join(""),
 			}
 			this.bindEvent();
-			if (history.state == null) {
-				$(".j-prov").html(this.element.$provName);
-				$(".j-city").html(this.element.$cityName);
-				this.ajaxRegion(self.provAjax);
-				this.ajaxRegion(self.cityAjax);
-			}
 		},
 
 
@@ -244,8 +241,6 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			this.element.$revert.on("click",this.modifyCase.bind(this));
 			this.element.$involved.on("click",this.involvedColor.bind(this));
 			this.element.$involved.on("keyup",this.involved.bind(this));
-			this.element.$province.on("click",".s-province",this.region.bind(this))
-			this.element.$region.on("click","li",this.regionList.bind(this))
 			this.element.$scrollTop.on("click",this.scrollTop.bind(this));
 			$(document).click(function(){
 				$(".s-province").removeClass('show');
@@ -263,12 +258,10 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				caseType: this.element.$caseTypeBox.html(),
 				caseTypeShow: this.element.$caseTypeBox.hasClass('show'),
 				lawyerList: $(".g-lawyer-list").html(),
-				province: this.element.$province.html(),
-				caseTips: this.element.$caseTips.val(),
+                caseTips: this.element.$caseTips.val(),
+                caseTips2: this.element.$caseTips2.val(),
 				orderInput: $(".order input").val(),
-				topHeight: $(window).scrollTop(),
-				provName: this.element.$provName,
-				cityName: this.element.$cityName
+				topHeight: $(window).scrollTop()
 			};
 
 
@@ -280,16 +273,16 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			 }
 		},
 		showLastResult: function() {
-			console.log('1111111111')
 			$(".g-lawyer-list").html(history.state.lawyerList);
 			$(".g-lawyer-list").show();
 
 			this.element.$caseTypeBox.html(history.state.caseType);
-			if (history.state.caseType == true) {
-				this.element.$caseTypeBox.show();
-			}
-			this.element.$province.html(history.state.province);
-			this.element.$caseTips.val(history.state.caseTips);
+			// if (history.state.caseType == true) {
+			// 	this.element.$caseTypeBox.show();
+			// }
+			//this.element.$province.html(history.state.province);
+            this.element.$caseTips.val(history.state.caseTips);
+            this.element.$caseTips2.val(history.state.caseTips2);
 			this.element.$region = $(".m-region");
 			this.getCase();
 
@@ -392,7 +385,7 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
             var self = this;
             e.preventDefault();
             var $el = $(e.target).closest(".btn-default");
-            var caseTipsVal = this.element.$caseTips.val();
+            var caseTipsVal = this.element.$caseTips2.val();
             this.selector.caseDes = "";
             this.selector.type = 2;
             var order = $(".order input").val();
@@ -403,22 +396,13 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
             //this.selector.involvedMoney = $(".u-involved input").val().replace(/(\,+?)/g,"");
             $(".g-lawyer").hide();
             $(".g-return").show();
-            if(this.element.$caseTypeBox.hasClass('show')){
-
-                this.selector.disputeArr.unshift(caseTipsVal)
-                self.selector.caseDes= this.selector.disputeArr.join(",");
-                $(".g-loding").fadeIn(1000,function(){
-                    //self.ajax(0,self.selector.caseTypeName,self.selector.caseType);
-                    self.ajaxType();
-					//self.initPagination();
-                });
-            }else{
-
-                this.selector.caseDes = caseTipsVal;
-                $(".g-loding").fadeIn(1000,function(){
-                    self.ajaxType();
-                });
-            }
+			this.selector.disputeArr.unshift(caseTipsVal)
+			self.selector.caseDes= this.selector.disputeArr.join(",");
+			$(".g-loding").fadeIn(1000,function(){
+				//self.ajax(0,self.selector.caseTypeName,self.selector.caseType);
+				self.ajaxType(2);
+				//self.initPagination();
+			});
         },
 		searchLaw: function(e){
 			var self = this;
@@ -435,8 +419,6 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				//this.selector.involvedMoney = $(".u-involved input").val().replace(/(\,+?)/g,"");
 				$(".g-lawyer").hide();
 				$(".g-return").show();
-				if(this.element.$caseTypeBox.hasClass('show')){
-
 					this.selector.disputeArr.unshift(caseTipsVal)
 					self.selector.caseDes= this.selector.disputeArr.join(",");
 					$(".g-loding").fadeIn(1000,function(){
@@ -444,14 +426,6 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
                         self.ajaxType(1);
 						//self.initPagination();
 					});
-				}else{
-
-					this.selector.caseDes = caseTipsVal;
-					$(".g-loding").fadeIn(1000,function(){
-						self.ajaxType(1);
-					});
-				}
-
 			//}
 		},
 		modifyCase: function(){
@@ -488,52 +462,6 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			var $el = $(e.target).closest('.f-jump')
 			var caseName = $el.siblings('.m-case').find(".j-caseDetails").html();
 			localStorage.caseName = caseName;
-		},
-		region: function(e){
-			e.stopPropagation();
-			var self = this;
-			var $el = $(e.target).closest('.s-province');
-			if($el.hasClass('show')){
-				$el.removeClass('show');
-				this.testing.prov = false;
-			}else{
-				if($el.data("prov") == "prov"){
-					this.ajaxRegion(self.provAjax);
-					$el.addClass('show').siblings('.s-province').removeClass('show')
-				}else{
-					if($(".j-prov").html() == "全国"){
-						$el.removeClass('show');
-					}else{
-						$el.addClass('show').siblings('.s-province').removeClass('show')
-						this.ajaxRegion(self.cityAjax);
-						this.selector.regionId = $(".j-prov").html();
-					}
-				}
-			}
-		},
-		regionList: function(e){
-			e.preventDefault();
-			e.stopPropagation();
-			var $el = $(e.target).closest('li');
-			if($el.parents(".m-region").hasClass('prov-pop')){
-				$(".j-prov").html($el.html());
-				$(".j-prov").attr("id",$el.attr("id"));
-				$(".prov-pop").parents(".s-province").removeClass('show');
-				$(".j-city").html("不限");
-				$(".j-city").attr("id","");
-				this.selector.regionId = $(".j-prov").attr("id");
-				if($el.html() == "全国"){
-					this.selector.regionId = "";
-				}
-			}else{
-				$(".j-city").html($el.html());
-				$(".j-city").attr("id",$el.attr("id"));
-				$(".city-pop").parents(".s-province").removeClass('show');
-				this.selector.regionId = $(".j-city").attr("id");
-				if($el.html() == "不限"){
-					this.selector.regionId = $(".j-prov").attr("id");
-				}
-			}
 		},
 		initPagination : function(totalSize) {
 			var self = this;
@@ -582,12 +510,15 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 				console.log("complete");
 			});
 		},
-		ajaxType: function() {
+		ajaxType: function(type) {
 			var self = this;
-			var data = {
-					name: self.selector.caseDes
-			};
-			var url = this.selector.type === 1 ? 'agent_by_name' : 'agent_company';
+            console.log(self.element.$caseTips.val());
+            console.log(type);
+            var url = type === 1 ? 'agent_by_name' : 'agent_company';
+            var name = type === 1 ? self.element.$caseTips.val() : self.element.$caseTips2.val();
+            var data = {
+                name: name
+            };
 			$.ajax({
 					url: 'http://47.92.38.167:8889/static_query/' + url,
 				type: 'POST',
@@ -718,29 +649,6 @@ define(["jquery","jqueryMigrate","bootstrap3","ejs","pagination"],function($){
 			$(".g-loding").hide();
 			$(".g-lawyer-list").show();
 			$(".scroll-top").show();
-		},
-		provAjax:function(json){
-			var self = this;
-			var data = (typeof json == 'object') ? json : JSON.parse(json)
-			$(".prov-pop").html(ejs.render(self.mosaic.province,{data : data}))
-			for(var i = 0; i < data["0"].length; i++){
-				if(data["0"][i].n == self.element.$provName){
-					$(".j-prov").attr("id", data["0"][i].i);
-				};
-			}
-		},
-		cityAjax:function(json){
-			var self = this;
-			var data = (typeof json == 'object') ? json : JSON.parse(json)
-			var id = $(".j-prov").attr("id");
-			$(".city-pop").html(ejs.render(self.mosaic.city,{data : data, id : id}))
-			var c = this.element.$cityName || '';
-			for (var i = 0; i < data[id].length; i++) {
-				//var cityName = c.replace("市",'');
-				//if(data[id][i].n == cityName){
-					$(".j-city").attr("id", data[id][i].i)
-				//}
-			};
 		}
 	}
     var start = new App();

@@ -13,9 +13,10 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
 		};
 	};
 	App.prototype = {
-		name : decodeURI(escape(getQueryString("name"))),
+        typeName : decodeURI(escape(getQueryString("typeName"))),
+        typeClass : decodeURI(escape(getQueryString("class"))),
 		location : decodeURI(escape(getQueryString("location"))),
-		caseName : encodeURI(getQueryString("caseName")),
+		name : decodeURI(escape(getQueryString("name"))),
 		constructor : App,
 
 		init: function(){
@@ -195,7 +196,7 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
 					'			<% if(data.detail.length == 0){ %>',
 					'				<span>暂无</span>',
 					'			<% }else{ %>',
-					'				<% for (var i = 0; i < 3; i++) { %>',
+					'				<% for (var i = 0; i < data.detail.length; i++) { %>',
 					'					<span><%=data.detail[i].reason2%>(<%=data.detail[i].count%>)</span>',
 					'				<% }; %>',
 					'			<% }; %>',
@@ -208,7 +209,7 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
 					'				<dd>暂无</dd>',
 					'			<% }else{ %>',
                     '				<% for (var i = 0; i < 3; i++) { %>',
-					'       <dd><a class="caseName" href="caseDetail.html?id=<%=data.detail[i].doc[0].wenshu_id%>&reason=<%=data.detail[i].reason2%>" target="_blank"><%=data.detail[i].doc[0].title%></a></dd>',
+					'       <dd><a class="caseName" href="caseDetail.html?id=<%=data.detail[0].doc[i].wenshu_id%>&reason=<%=data.detail[0].reason2%>" target="_blank"><%=data.detail[0].doc[i].title%></a></dd>',
                     '				<% }; %>',
 					'			<% } %>',
 					'       </div>',
@@ -701,10 +702,12 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
 	    ajax: function() {
 			var self = this;
 			console.log(localStorage);
+			var reasonData = {};
+			reasonData['reason_' + App.prototype.typeClass] = App.prototype.typeName;
 			var reqData = {
-				reason: {reason_4: ""},
 				lawyer_name : App.prototype.name,
 				lawyer_location : App.prototype.location,
+				reason: reasonData
 			};
 			$.ajax({
 				url: 'http://47.92.38.167:8889/static_query/lawyer_info',

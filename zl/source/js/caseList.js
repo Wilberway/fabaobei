@@ -564,11 +564,11 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 				filter.casetype = [];
 			}
             //var reqData = {"text": arg.text, "agent":arg.keyword,"page":10, "num":12};
-            var reqData = {"text": arg.text};
+            var reqData = {"patent_no": arg.text};
 			console.log('reqData',reqData);
 			$.ajax({
 
-				url: 'http://47.92.38.167:8889/feature_query/patent_classify',
+				url: 'http://47.92.38.167:8889/cpquery/doc_url',
 
 				type: 'POST',
 				dataType: 'JSON',
@@ -576,26 +576,28 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 			})
 			//.done(self.successAjax.bind(this))
 			.done((function(res){
-				var that = this;
-				var reqData = {
-					"classify_no": res.data[0][0],
-					"page":10,
-					"num":100
-				};
-				$.ajax({
-					url: 'http://47.92.38.167:8889/static_query/patent_info',
-	
-					type: 'POST',
-					dataType: 'JSON',
-					data: JSON.stringify(reqData),
-				})
-				.done(callback.bind(that))
-				.fail(function() {
-					$('#content-load').hide();
-					$('#result-scroll-load').hide();
-					$('#content-title').show();
-					self.resetParams();
-				})
+				console.log('res',res);
+				if(res && res.data){
+					top.window.location.replace(res.data);
+				}
+				// var that = this;
+				// var reqData = {
+				// 	"patent_no": res.data[0][0]
+				// };
+				// $.ajax({
+				// 	url: 'http://47.92.38.167:8889/static_query/patent_info',
+                //
+				// 	type: 'POST',
+				// 	dataType: 'JSON',
+				// 	data: JSON.stringify(reqData),
+				// })
+				// .done(callback.bind(that))
+				// .fail(function() {
+				// 	$('#content-load').hide();
+				// 	$('#result-scroll-load').hide();
+				// 	$('#content-title').show();
+				// 	self.resetParams();
+				// })
 			}).bind(this))
 			.fail(function() {
 				alert("服务器错误!");

@@ -9,7 +9,8 @@ var chartsData = {
                     normal: {
                         show:true,
                         textStyle: {
-                            fontSize: 12
+                            fontSize: 12,
+							color: "red"
                         },
                         formatter: '{b}: {d}%'
                     }
