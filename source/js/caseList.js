@@ -58,7 +58,8 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 				$menuCase: $('#menu-case'),
 				$menuArea: $('#menu-area'),
 				$menuAreaM: $('#menu-area-m'),
-
+                $province: $(".u-province"),//省份
+                $region: $(".m-region"),//城市
 				$areaRadio: $('#area-radio'),
 				$levelRadio: $('#level-radio'),
 				$typeEnlarge: $(".case-pop .select-menu li"),
@@ -74,6 +75,13 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 			this.api = {
 
 			};
+            this.testing = {
+                caseType: false,
+                provinceId: false,
+                cityId: false,
+                callback: false,
+                type: false,
+            };
 			if (history.state != null) {
 				this.selector.lastResult = history.state.lastResult;
 				this.selector.lastHeight = history.state.lastHeight;
@@ -129,6 +137,30 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
                     '<% } %>',
 
 				].join(""),
+                province:[
+                    '<ul class="all-box f-clear"><li>全国</li></ul>',
+                    '<ul class="f-clear">',
+                    '	<li id="<%=data["2000000"][0].i%>"><%=data["2000000"][0].n%></li>',
+                    '	<li id="<%=data["10000000"][0].i%>"><%=data["10000000"][0].n%></li>',
+                    '	<li id="<%=data["3000000"][0].i%>"><%=data["3000000"][0].n%></li>',
+                    '	<li id="<%=data["23000000"][0].i%>"><%=data["23000000"][0].n%></li>',
+                    '</ul>',
+                    '<ul class="provList f-clear">',
+                    '	<% for (var i = 0; i < data["0"].length; i++) { %>',
+                    '		<% if(data["0"][i].n!= "北京" && data["0"][i].n!= "上海" && data["0"][i].n!= "天津" && data["0"][i].n!= "重庆" && data["0"][i].n!= "兵团"){ %>',
+                    '			<li id="<%=data["0"][i].i%>"><%=data["0"][i].n%></li>',
+                    '		<% }; %>',
+                    '	<% }; %>',
+                    '</ul>',
+                ].join(""),
+                city:[
+                    '<ul class="all-box f-clear"><li>不限</li></ul>',
+                    '<ul class="provList f-clear">',
+                    '	<% for (var i = 0; i < data[id].length; i++) {%>',
+                    '		<li id="<%=data[id][i].i%>"><%=data[id][i].n%></li>',
+                    '	<% }; %>',
+                    '</ul>',
+                ].join("")
 			};
 
 
@@ -175,6 +207,8 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
             this.element.$scrollTop.on("click",this.scrollTop.bind(this));
 			this.element.$filterBtn.on("click", this.mobileFilterClicked.bind(this));
 			this.element.$resultMask.on("click", this.dismissSearch.bind(this));
+            this.element.$province.on("click",".s-province",this.region.bind(this));
+            this.element.$region.on("click","li",this.regionList.bind(this));
 			var he = $(window).height() - 183;
 		    $('.g-body').css({
 		    	"min-height" : he+"px",
@@ -563,12 +597,14 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 			//.done(self.successAjax.bind(this))
 			.done((function(res){
 				var that = this;
+                var region = $('.j-city').text();
 				var reqData = {
 					reason: {
 						'reason_2': res.data[0].second_reason
 					},
 					page_count: 20,
-					page_num: self.ajaxData.pageNum + 1
+					page_num: self.ajaxData.pageNum + 1,
+                    region: region
 				};
 				App.prototype.reason_2 = res.data[0].second_reason;
 				var sub_reason_class = res.data[0].sub_reason_class;
@@ -578,7 +614,7 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 	
 					type: 'POST',
 					dataType: 'JSON',
-					data: JSON.stringify(reqData),
+					data: JSON.stringify(reqData)
 				})
 				.done(callback.bind(that))
 				.fail(function() {
@@ -663,8 +699,93 @@ define(["jquery","ejs","multiSelect","highlighter","jqueryMigrate", "bootstrap3"
 				}
 			}
 		},
+        region: function(e){
+            e.stopPropagation();
+            var self = this;
+            var $el = $(e.target).closest('.s-province');
+            if($el.hasClass('show')){
+                $el.removeClass('show');
+                this.testing.prov = false;
+            }else{
+                if($el.data("prov") == "prov"){
+                    this.ajaxRegion(self.provAjax);
+                    $el.addClass('show').siblings('.s-province').removeClass('show')
+                }else{
+                    if($(".j-prov").html() == "全国"){
+                        $el.removeClass('show');
+                    }else{
+                        $el.addClass('show').siblings('.s-province').removeClass('show')
+                        this.ajaxRegion(self.cityAjax);
+                        this.selector.regionId = $(".j-prov").html();
+                    }
+                }
+            }
+        },
+        regionList: function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            var $el = $(e.target).closest('li');
+            if($el.parents(".m-region").hasClass('prov-pop')){
+                $(".j-prov").html($el.html());
+                $(".j-prov").attr("id",$el.attr("id"));
+                $(".prov-pop").parents(".s-province").removeClass('show');
+                $(".j-city").html("不限");
+                $(".j-city").attr("id","");
+                this.selector.regionId = $(".j-prov").attr("id");
+                if($el.html() == "全国"){
+                    this.selector.regionId = "";
+                }
+            }else{
+                $(".j-city").html($el.html());
+                $(".j-city").attr("id",$el.attr("id"));
+                $(".city-pop").parents(".s-province").removeClass('show');
+                this.selector.regionId = $(".j-city").attr("id");
+                if($el.html() == "不限"){
+                    this.selector.regionId = $(".j-prov").attr("id");
+                }
+            }
+        },
+        ajaxRegion: function(callback) {
+            var self = this;
+            $.ajax({
+                url: 'source/js/loc.json',
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+            })
+                .done(callback.bind(this))
+                .fail(function() {
+                    console.log("type-erro");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+        },
+        provAjax:function(json){
+            var self = this;
+            var data = (typeof json == 'object') ? json : JSON.parse(json)
+            $(".prov-pop").html(ejs.render(self.mosaic.province,{data : data}))
+            for(var i = 0; i < data["0"].length; i++){
+                if(data["0"][i].n == self.element.$provName){
+                    $(".j-prov").attr("id", data["0"][i].i);
+                };
+            }
+        },
+        cityAjax:function(json){
+            var self = this;
+            var data = (typeof json == 'object') ? json : JSON.parse(json)
+            var id = $(".j-prov").attr("id");
+            $(".city-pop").html(ejs.render(self.mosaic.city,{data : data, id : id}))
+            var c = this.element.$cityName || '';
+            for (var i = 0; i < data[id].length; i++) {
+                //var cityName = c.replace("市",'');
+                //if(data[id][i].n == c){
+                $(".j-city").attr("id", data[id][i].i)
+                //}
+            };
+        }
 
-	}
+	};
     var start = new App();
     return start;
 });

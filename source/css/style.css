@@ -1433,6 +1433,7 @@ img {
       font-style: normal;
       font-family: "Hiragino Sans GB","Microsoft Yahei",SimSun,Arial,"Helvetica Neue",Helvetica; }
   .g-describe .u-btn a {
+    margin-top: 30px;
     width: 100%;
     height: 40px;
     line-height: 40px;
@@ -1803,15 +1804,15 @@ img {
 .g-lawyer {
   position: relative;
   padding-bottom: 20px; }
-  .g-lawyer .m-choose .u-title h3 {
+  .g-lawyer,.g-describe .m-choose .u-title h3 {
     font-size: 16px;
     color: #111; }
-    .g-lawyer .m-choose .u-title h3 span {
+    .g-lawyer,.g-describe .m-choose .u-title h3 span {
       font-size: 0.85em;
       color: #f15a24; }
-  .g-lawyer .m-choose .u-case {
+  .g-lawyer,.g-describe .m-choose .u-case {
     margin-left: 15px; }
-    .g-lawyer .m-choose .u-case textarea {
+    .g-lawyer,.g-describe .m-choose .u-case textarea {
       resize: none;
       width: 100%;
       padding: 5px;
@@ -1820,22 +1821,22 @@ img {
       line-height: 20px;
       border: 1px solid #64CC8E;
       box-shadow: 0 0 5px #64CC8E; }
-  .g-lawyer .m-choose h6 {
+  .g-lawyer,.g-describe .m-choose h6 {
     margin: 10px 0 10px 15px;
     font-size: 12px;
     color: #666; }
-  .g-lawyer .m-choose .u-tips {
+  .g-lawyer,.g-describe .m-choose .u-tips {
     margin-left: 15px;
     font-size: 12px;
     color: #888;
     line-height: 28px; }
-    .g-lawyer .m-choose .u-tips p {
+    .g-lawyer,.g-describe .m-choose .u-tips p {
       margin-bottom: 0px; }
-  .g-lawyer .m-choose .u-btn a {
+  .g-lawyer,.g-describe .m-choose .u-btn a {
     position: relative;
     font-size: 14px;
     color: #333; }
-    .g-lawyer .m-choose .u-btn a i {
+    .g-lawyer,.g-describe .m-choose .u-btn a i {
       display: inline-block;
       position: absolute;
       right: -18px;
@@ -1843,13 +1844,13 @@ img {
       width: 10px;
       height: 6px;
       background: url("../images/icon-down.png") center center no-repeat; }
-    .g-lawyer .m-choose .u-btn a.active {
+    .g-lawyer,.g-describe .m-choose .u-btn a.active {
       color: #64cc8E; }
-  .g-lawyer .m-choose .u-province {
+  .g-lawyer,.g-describe .m-choose .u-province {
     margin: 0 0 20px 1px;
     font-size: 14px;
     color: #444; }
-    .g-lawyer .m-choose .u-province .s-province {
+    .g-lawyer,.g-describe .m-choose .u-province .s-province {
       position: relative;
       height: 34px;
       line-height: 34px;
@@ -1858,9 +1859,9 @@ img {
       border-radius: 4px;
       vertical-align: middle;
       cursor: pointer; }
-      .g-lawyer .m-choose .u-province .s-province:hover {
+      .g-lawyer,.g-describe .m-choose .u-province .s-province:hover {
         border: 1px solid #64CC8E; }
-      .g-lawyer .m-choose .u-province .s-province i {
+      .g-lawyer,.g-describe .m-choose .u-province .s-province i {
         display: inline-block;
         position: absolute;
         right: 0;
@@ -1868,7 +1869,7 @@ img {
         width: 24px;
         height: 34px;
         background: url("../images/icon-down.png") center center no-repeat; }
-      .g-lawyer .m-choose .u-province .s-province .m-region {
+      .g-lawyer,.g-describe .m-choose .u-province .s-province .m-region {
         display: none;
         position: absolute;
         left: -1px;
@@ -1879,14 +1880,14 @@ img {
         border: 1px solid #E6E6E6;
         background: #fff;
         z-index: 10; }
-        .g-lawyer .m-choose .u-province .s-province .m-region ul {
+        .g-lawyer,.g-describe .m-choose .u-province .s-province .m-region ul {
           padding-top: 10px;
           border-bottom: 1px solid #E6E6E6; }
-          .g-lawyer .m-choose .u-province .s-province .m-region ul.all-box {
+          .g-lawyer,.g-describe .m-choose .u-province .s-province .m-region ul.all-box {
             width: 50px; }
           .g-lawyer .m-choose .u-province .s-province .m-region ul:last-child {
             border-bottom: 0; }
-        .g-lawyer .m-choose .u-province .s-province .m-region li {
+        .g-lawyer,.g-describe .m-choose .u-province .s-province .m-region li {
           float: left;
           height: 20px;
           margin: 0 5px 10px;
@@ -1894,36 +1895,36 @@ img {
           line-height: 20px;
           text-align: center;
           cursor: pointer; }
-          .g-lawyer .m-choose .u-province .s-province .m-region li:hover {
+          .g-lawyer,.g-describe .m-choose .u-province .s-province .m-region li:hover {
             color: #fff;
             background: #3F9F70; }
-          .g-lawyer .m-choose .u-province .s-province .m-region li.active {
+          .g-lawyer,.g-describe .m-choose .u-province .s-province .m-region li.active {
             color: #fff;
             background: #3F9F70; }
-    .g-lawyer .m-choose .u-province .show {
+    .g-lawyer,.g-describe .m-choose .u-province .show {
       border: 1px solid #64CC8E; }
-      .g-lawyer .m-choose .u-province .show .m-region {
+      .g-lawyer,.g-describe .m-choose .u-province .show .m-region {
         display: block; }
-  .g-lawyer .m-choose .u-involved {
+  .g-lawyer,.g-describe .m-choose .u-involved {
     position: relative;
     padding-left: 20px; }
-    .g-lawyer .m-choose .u-involved input {
+    .g-lawyer,.g-describe .m-choose .u-involved input {
       width: 166px;
       height: 37px;
       line-height: 37px;
       padding-left: 10px;
       border: 1px solid #E6E6E6;
       margin-right: 16px; }
-    .g-lawyer .m-choose .u-involved span {
+    .g-lawyer,.g-describe .m-choose .u-involved span {
       display: none;
       position: absolute;
       left: 250px;
       top: 13px;
       font-size: 12px;
       color: #f15a24; }
-  .g-lawyer .m-choose-btn {
+  .g-lawyer,.g-describe .m-choose-btn {
     text-align: center; }
-    .g-lawyer .m-choose-btn a {
+    .g-lawyer,.g-describe .m-choose-btn a {
       width: 150px;
       height: 40px;
       line-height: 40px;
@@ -2834,6 +2835,31 @@ div.panel-heading {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
+}
+.g-describe .m-choose .u-province .col-sm-4{
+  width: 100%;
+}
+.g-describe .m-choose .s-province{
+  position: relative;
+  height: 34px;
+  line-height: 34px;
+  padding-left: 10px;
+  border: 1px solid #E6E6E6;
+  border-radius: 4px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.g-describe .u-province .s-province .m-region{
+  display: none;
+  position: absolute;
+  left: -1px;
+  top: 33px;
+  padding: 8px;
+  font-size: 14px;
+  color: #444;
+  border: 1px solid #E6E6E6;
+  background: #fff;
+  z-index: 10;
 }
 #circleChart1,#circleChart2{
   height: 350px;
