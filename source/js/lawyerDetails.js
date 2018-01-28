@@ -333,11 +333,13 @@ define(["require", "unslider","echarts","china","echartsData","common","ejs","pa
            // console.log('chartsData',echartsData);
 			for(var i in detail){
                 chartsData.option1.series[0].data.push({value: detail[i].count,name:detail[i].reason2});
+                chartsData.option1.legend.data.push(detail[i].reason2);
             }
             for(var j in detail){
 				var str = detail[j].reason2.length > 5 ? detail[j].reason2.substring(0,6) + '...' : detail[j].reason2;
                 chartsData.option2.xAxis.data.push(str);
                 chartsData.option2.series[0].data.push(detail[j].suc_rate);
+                chartsData.option2.series[1].data.push(detail[j].suc_rate + detail[j].part_suc_rate);
             }
 
 			// 指定图表的配置项和数据
